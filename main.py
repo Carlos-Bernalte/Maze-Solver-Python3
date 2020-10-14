@@ -58,10 +58,7 @@ def main():
 
 
 if __name__ == '__main__':
-    #parse_argv()
-<<<<<<< Updated upstream
+    # parse_argv()
+
     main()
-=======
-    main()
-    
->>>>>>> Stashed changes
+

@@ -29,8 +29,8 @@ class Maze():
                 print(self.grid[i][j].getPosition())
 
     def Choose_Starting_Cell(self):
-        initialCellX = random.randint(0,columns-1)
-        initialCellY = random.randint(0,rows-1)
+        initialCellX = random.randint(0, self.columns - 1)
+        initialCellY = random.randint(0, self.rows - 1)
         print(initialCellX+" "+initialCellY)
         self.grid[initialCellY][initialCellX].visited = True
         return (initialCellX, initialCellY)
@@ -38,10 +38,10 @@ class Maze():
     def Choose_Random_Cell(self):
         choosen=False
         while not choosen:
-            CellX = random.randint(0,columns-1)
-            CellY = random.randint(0,rows-1)
-            if grid[CellY][CellX].visited == False:
-                grid[CellY][CellX].visited = True
+            CellX = random.randint(0, self.columns - 1)
+            CellY = random.randint(0, self.rows - 1)
+            if self.grid[CellY][CellX].visited == False:
+                self.grid[CellY][CellX].visited = True
                 choosen = True
         return (CellX, CellY)
     def generate_lab(self):
