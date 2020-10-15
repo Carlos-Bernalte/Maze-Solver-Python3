@@ -32,8 +32,8 @@ class Maze():
         return complete
 
     def Choose_Starting_Cell(self):
-        initialCellX = random.randint(0,columns-1)
-        initialCellY = random.randint(0,rows-1)
+        initialCellX = random.randint(0, self.columns - 1)
+        initialCellY = random.randint(0, self.rows - 1)
         print(initialCellX+" "+initialCellY)
         self.grid[initialCellY][initialCellX].visited = True
         return (initialCellX, initialCellY)
@@ -41,10 +41,17 @@ class Maze():
     def Choose_Random_Cell(self):
         choosen=False
         while not choosen:
+<<<<<<< HEAD
             self.CurrentCellX = random.randint(0,columns-1)
             self.CurrentCellY = random.randint(0,rows-1)
             if grid[CurrentCellY][CurrentCellX].visited == False:
                 grid[CellY][CellX].visited = True
+=======
+            CellX = random.randint(0, self.columns - 1)
+            CellY = random.randint(0, self.rows - 1)
+            if self.grid[CellY][CellX].visited == False:
+                self.grid[CellY][CellX].visited = True
+>>>>>>> 2c3f5ffa5a03c119c97b3d4b0e4eb75efa80b50f
                 choosen = True
 
     def randomize_dir(self):

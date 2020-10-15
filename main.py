@@ -58,5 +58,12 @@ def main():
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     #parse_argv()
     main()
+=======
+    # parse_argv()
+
+    main()
+
+>>>>>>> 2c3f5ffa5a03c119c97b3d4b0e4eb75efa80b50f
