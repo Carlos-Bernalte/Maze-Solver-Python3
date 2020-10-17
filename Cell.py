@@ -19,9 +19,11 @@ class Cell():
 
     def getPosition(self):
         return self.position
-
+    def getVisited(self):
+        return self.visited
     def setVisited(self):
         self.visited=True
+        self.onTrace=False
 
     def setOnTrace(self):
         self.onTrace= True
@@ -30,4 +32,19 @@ class Cell():
         self.onTrace= False
 
     def isOnTrace(self):
-        return onTrace
+        return self.onTrace
+
+    def setDefault(self):
+        self.neighbours = [False, False, False, False]
+        self.onTrace= False
+    
+    def setNeighbour(self, direction):
+        self.come_from=direction
+        if direction == "N":
+            self.neighbours[0]=True
+        if direction == "E":
+            self.neighbours[1]=True
+        if direction == "S":
+            self.neighbours[2]=True
+        if direction == "W":    
+            self.neighbours[3]=True
