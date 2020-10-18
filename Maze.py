@@ -2,24 +2,21 @@ import Cell, random
 import numpy as np
 
 class Maze():
+
+    grid = []
+    path = []
+
     def __init__(self,rows, columns):
         self.rows = rows
         self.columns = columns
-        self.grid = []
-        self.path=[]
-
-    def generate_maze_sol(self, rows, columns, n_neighbours, movements, movements_id):
-        self.rows = rows
-        self.columns = columns
-        self.n_neighbours = n_neighbours
-        self.movements = movements
-        self.movements_id = movements_id
+        self.init_grid()
 
     def init_grid(self):
         for i in range(self.rows):
             self.grid.append([])
             for j in range(self.columns):
                 self.grid[i].append(Cell.Cell(i, j))
+    
     def getMaze(self):
         return self.grid
 
@@ -31,13 +28,14 @@ class Maze():
                     complete = False
         return complete
 
-    def Choose_Starting_Cell(self):
+    def choose_starting_cell(self):
         initialCellX = random.randint(0, self.columns - 1)
         initialCellY = random.randint(0, self.rows - 1)
-        self.grid[initialCellY][initialCellX].setVisited()
+        self.grid[initialCellX][initialCellY].setVisited()
+        print("Tengo que llegar a: ", initialCellX, " ",initialCellY)
         return (initialCellX, initialCellY)
 
-    def Choose_Random_Cell(self):
+    def choose_random_cell(self):
         choosen=False
         while not choosen:
             self.CurrentCellX = random.randint(0, self.columns - 1)
@@ -45,6 +43,8 @@ class Maze():
             if self.grid[self.CurrentCellX][self.CurrentCellY].getVisited() == False:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
                 choosen = True
+        print()
+        print("Empiezo en: ", self.grid[self.CurrentCellX][self.CurrentCellY].getPosition())
 
     def randomize_dir(self):
         choosen=False
@@ -52,54 +52,55 @@ class Maze():
             direction=random.randint(0,3)
             
             if direction==0 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX-1!=-1:
-                print("North")
+                print("Voy para el Norte")
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
                 self.CurrentCellX-=1
-                print("Vamos al Norte. Posición en X= ", self.CurrentCellX, "Posición en Y= ", self.CurrentCellY)
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
                 choosen = True
             elif direction==1 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "E" and self.CurrentCellY+1!=self.columns:
-                print("east")
+                print("Voy para el Este")
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
                 self.CurrentCellY+=1
-                print("Vamos al Este. Posición en X= ", self.CurrentCellX, "Posición en Y= ", self.CurrentCellY)
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("W")
                 choosen = True
             elif direction==2 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "S" and self.CurrentCellX+1!=self.rows:
-                print("South")
+                print("Voy para el Sur")
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
                 self.CurrentCellX+=1
-                print("Vamos al Sur. Posición en X= ", self.CurrentCellX, "Posición en Y= ", self.CurrentCellY)
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
                 choosen = True
             elif direction==3 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "W" and self.CurrentCellY-1!=-1:
-                print("West")
+                print("Voy para el Oeste")
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("W")
                 self.CurrentCellY-=1
-                print("Vamos al Oeste. Posición en X= ", self.CurrentCellX, "Posición en Y= ", self.CurrentCellY)
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
                 choosen = True
 
     def generate_lab(self):
+        self.path=[]
         self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
         while self.grid[self.CurrentCellX][self.CurrentCellY].getVisited()==False:
             self.randomize_dir()
-
-            self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
-
+            print("Estoy ahora en: ", self.grid[self.CurrentCellX][self.CurrentCellY].getPosition())
             if self.grid[self.CurrentCellX][self.CurrentCellY].isOnTrace()==True:
-                print("Cicle")
+                
+                print("Loop")
                 cellPopped=self.path.pop()
-                while cellPopped.getPosition==() != (self.CurrentCellX,self.CurrentCellY):
-                    cellPopped.setDefault()
-                    cellPopped=path.pop()
+                print(cellPopped.getPosition(), " ", (self.CurrentCellX,self.CurrentCellY))
+                while cellPopped.getPosition() != (self.CurrentCellX,self.CurrentCellY):
+                    self.grid[cellPopped.getPosition()[0]][cellPopped.getPosition()[1]].setDefault()
+                    print("La celda ", cellPopped.getPosition()[0], " ", cellPopped.getPosition()[1]," funada")
+                    cellPopped=self.path.pop()
+                self.grid[cellPopped.getPosition()[0]][cellPopped.getPosition()[1]].setDefault()
             self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
+            self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
+        print("He llegado a un camino en: ", self.grid[self.CurrentCellX][self.CurrentCellY].getPosition())
             
             
     def iterate(self):
-        self.Choose_Starting_Cell()
+        self.choose_starting_cell()
         while self.check_maze()==False:
-            self.Choose_Random_Cell()
+            self.choose_random_cell()
             self.generate_lab()
             for cell in self.path:
                 cell.setVisited()

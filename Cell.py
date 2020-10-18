@@ -4,10 +4,10 @@ class Cell():
         self.position = (x, y)
         self.value = 0
         self.neighbours = [False, False, False, False]
-        #self.neighbours = [True, True, True, True]
         self.visited = False
         self.onTrace= False
         self.come_from = ""
+
     def getNeigh(self):
         return self.neighbours
 
@@ -27,9 +27,6 @@ class Cell():
 
     def setOnTrace(self):
         self.onTrace= True
-
-    def setNotOnTrace(self):
-        self.onTrace= False
 
     def isOnTrace(self):
         return self.onTrace

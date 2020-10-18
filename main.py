@@ -17,12 +17,13 @@ def parse_argv():
 def main():
     #rows=sys.argv[1]
     #columns=sys.argv[2]
-    rows=5
-    columns=5
+    rows=10
+    columns=10
 
-    sizeCell=50
-    Width=columns*sizeCell
-    Hight=rows*sizeCell
+    
+    Width=620
+    Hight=620
+    sizeCell=600/rows
     screen = pygame.display.set_mode((Width,Hight))
     pygame.display.set_caption("Lab_"+str(rows)+"_"+str(columns))
     screen.fill(WHITE)
@@ -30,9 +31,8 @@ def main():
     my_maze = Maze.Maze(columns,rows)
     my_maze.init_grid()
     my_maze.iterate()
-    my_maze.printMaze()
+    #my_maze.printMaze()
 
-  
 
     while 1:
         for Evento in pygame.event.get():
@@ -43,13 +43,13 @@ def main():
         for i in range(my_maze.rows):
             for j in range(my_maze.columns):
                 if my_maze.getMaze()[j][i].getNeigh()[0]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell,j*sizeCell], [i*sizeCell+sizeCell,j*sizeCell], 2) #North
+                    pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell +10], 2) #North
                 if my_maze.getMaze()[j][i].getNeigh()[1]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell+sizeCell,j*sizeCell], [i*sizeCell+sizeCell,j*sizeCell+sizeCell], 2) #East
+                    pygame.draw.line(screen, BLACK, [i*sizeCell+sizeCell +10,j*sizeCell+10], [i*sizeCell +10+sizeCell,j*sizeCell+sizeCell +10], 2) #East
                 if my_maze.getMaze()[j][i].getNeigh()[2]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell,j*sizeCell+sizeCell], [i*sizeCell+sizeCell,j*sizeCell+sizeCell], 2) #South
+                    pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell+sizeCell +10], 2) #South
                 if my_maze.getMaze()[j][i].getNeigh()[3]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell,j*sizeCell], [i*sizeCell,j*sizeCell+sizeCell], 2) #West
+                    pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell +10,j*sizeCell+sizeCell +10], 2) #West
         pygame.display.flip()
         clk.tick(20)
     pygame.quit()
