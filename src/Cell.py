@@ -11,7 +11,15 @@ class Cell:
         self.visited = False
         self.onTrace = False 
         self.come_from = ""
+<<<<<<< HEAD
         
+=======
+
+    def constJson(self,x,y,value,neighbours):
+        self.position=(x,y)
+        self.value=value
+        self.neighbours=neighbours
+>>>>>>> 1a94f903da93098bc0b1ef36cd9a31c9b5c2132e
 
     def getNeigh(self):
         return self.neighbours

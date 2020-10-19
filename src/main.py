@@ -23,10 +23,15 @@ def parse_argv():
     elif(not sys.argv[1].isdigit() or not sys.argv[2].isdigit()):
         print("The arguments must be digits.")
         sys.exit()
+<<<<<<< HEAD
 
 def drawMaze(maze, sizeCell):
     pygame.display.set_caption("Lab_" + str(maze.rows) + "_" + str(maze.columns))
 
+=======
+def drawMaze(maze, sizeCell):
+    pygame.display.set_caption("Lab_"+str(maze.rows)+"_"+str(maze.columns))
+>>>>>>> 1a94f903da93098bc0b1ef36cd9a31c9b5c2132e
     while 1:
         for Evento in pygame.event.get():
             if Evento.type == pygame.QUIT:
@@ -54,10 +59,29 @@ def main():
     if maze.rows > maze.columns:
         sizeCell = 600/maze.rows
     else:
+<<<<<<< HEAD
         sizeCell = 600/maze.columns
 
     maze.iterate()
     drawMaze(maze, sizeCell)
+=======
+        sizeCell=600/columns
+    
+    my_maze = Maze.Maze(columns,rows)
+    my_maze.iterate()
+    drawMaze(my_maze, sizeCell)
+
+def main():
+    #rows=sys.argv[1]
+    #columns=sys.argv[2]
+    rows = 100
+    columns= 100
+    sizeCell=600/rows
+    
+    my_maze = Maze.Maze(columns,rows)
+    my_maze.iterate()
+    drawMaze(my_maze, sizeCell)
+>>>>>>> 1a94f903da93098bc0b1ef36cd9a31c9b5c2132e
 
 if __name__ == '__main__':
     #parse_argv()
