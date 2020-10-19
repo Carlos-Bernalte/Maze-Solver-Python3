@@ -20,7 +20,7 @@ def parse_argv():
     elif(not sys.argv[1].isdigit() or not sys.argv[2].isdigit()):
         print("The arguments must be digits.")
         sys.exit()
-def drawMaze(maze):
+def drawMaze(maze, sizeCell):
     pygame.display.set_caption("Lab_"+str(maze.rows)+"_"+str(maze.columns))
     while 1:
         for Evento in pygame.event.get():
@@ -56,7 +56,7 @@ def generateFromJson():
     
     my_maze = Maze.Maze(columns,rows)
     my_maze.iterate()
-    drawMaze(my_maze)
+    drawMaze(my_maze, sizeCell)
 
 def main():
     #rows=sys.argv[1]
@@ -67,8 +67,7 @@ def main():
     
     my_maze = Maze.Maze(columns,rows)
     my_maze.iterate()
-    drawMaze(my_maze)
-
+    drawMaze(my_maze, sizeCell)
 
 if __name__ == '__main__':
     #parse_argv()

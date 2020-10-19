@@ -8,7 +8,7 @@ class Cell():
         self.onTrace= False 
         self.come_from = ""
 
-    def __init__(self,x,y,value,neighbours):
+    def constJson(self,x,y,value,neighbours):
         self.position=(x,y)
         self.value=value
         self.neighbours=neighbours

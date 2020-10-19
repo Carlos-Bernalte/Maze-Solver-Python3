@@ -12,7 +12,8 @@ class jsonManager:
         self.id_mov=data['id_mov']
         #for c in data['cells']:
 
-
+    def writeJson(self):
+        
     
     def get_nrows(self):
         return self.nrows
