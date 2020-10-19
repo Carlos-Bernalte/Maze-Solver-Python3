@@ -3,7 +3,7 @@
 
 class Cell:
 
-    def __init__(self, x, y, neighbours = None, value = 0 ):
+    def __init__(self, x, y, neighbours = None, value = 0):
         self.position = (x, y)
         self.value = value
         if neighbours is not None: self.neighbours=neighbours

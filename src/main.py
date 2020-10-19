@@ -8,7 +8,6 @@ from jsonManager import jsonManager
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-
 WIDTH=620
 HIGHT=620
 screen = pygame.display.set_mode((WIDTH,HIGHT))
@@ -28,7 +27,6 @@ def drawMaze(maze, sizeCell):
     pygame.display.set_caption("Lab_" + str(maze.rows) + "_" + str(maze.columns))
 
     while 1:
-
         #--Here the maze will be draw
         for i in range(maze.rows):
             for j in range(maze.columns):
@@ -54,6 +52,18 @@ def main():
 
     maze.iterate()
     drawMaze(maze, sizeCell)
+
+def main():
+    json = jsonManager.read()
+    maze = Maze.Maze(json)
+
+    if maze.rows > maze.columns:
+        sizeCell = 600/maze.rows
+    else:
+        sizeCell = 600/maze.columns
+
+    maze.iterate()
+    drawMaze(maze, sizeCell)    
 
 if __name__ == '__main__':
     #parse_argv()
