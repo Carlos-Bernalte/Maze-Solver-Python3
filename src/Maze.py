@@ -46,7 +46,6 @@ class Maze():
         choosen=False
         while not choosen:
             direction=random.randint(0,3)
-            
             if direction==0 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX-1!=-1:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
                 self.CurrentCellX-=1

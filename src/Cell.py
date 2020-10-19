@@ -5,8 +5,13 @@ class Cell():
         self.value = 0
         self.neighbours = [False, False, False, False]
         self.visited = False
-        self.onTrace= False
+        self.onTrace= False 
         self.come_from = ""
+
+    def __init__(self,x,y,value,neighbours):
+        self.position=(x,y)
+        self.value=value
+        self.neighbours=neighbours
 
     def getNeigh(self):
         return self.neighbours
@@ -44,3 +49,4 @@ class Cell():
             self.neighbours[2]=True
         if direction == "W":    
             self.neighbours[3]=True
+    
