@@ -5,12 +5,24 @@ import Cell, random
 
 class Maze:
 
-    grid = []
-    path = []
+    def __init__(self):
+        self.grid = []
+        self.path = []        
 
+<<<<<<< HEAD
     def generateMazeJson(self, json):
         self.rows = json['rows']
         self.columns = json['cols']
+=======
+    def generateRandomMaze(self, rows, columns):
+        self.rows = rows
+        self.columns = columns
+        self.init_grid()
+
+    def generateMazeJSON(self, JSON):
+        self.rows = JSON['rows']
+        self.columns = JSON['cols']
+>>>>>>> ada2f9009888012e26934ca008286823f023a567
         self.init_grid()
     
     def __init__(self, rows, columns):
@@ -44,8 +56,8 @@ class Maze:
     def choose_random_cell(self):
         choosen=False
         while not choosen:
-            self.CurrentCellX = random.randint(0, self.columns - 1)
-            self.CurrentCellY = random.randint(0, self.rows - 1)
+            self.CurrentCellX = random.randint(0, self.rows - 1)
+            self.CurrentCellY = random.randint(0, self.columns - 1)
             if self.grid[self.CurrentCellX][self.CurrentCellY].getVisited() == False:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
                 choosen = True
@@ -90,8 +102,7 @@ class Maze:
             self.delete_loop()
             self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
             self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
-            
-            
+
     def iterate(self):
         self.choose_starting_cell()
         while self.check_maze()==False:
