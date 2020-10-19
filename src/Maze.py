@@ -1,13 +1,16 @@
+#!/usr/bin/python3
+# -- coding: utf-8 --
+
 import Cell, random
 
-class Maze():
+class Maze:
 
     grid = []
     path = []
 
-    def __init__(self,rows, columns):
-        self.rows = rows
-        self.columns = columns
+    def __init__(self, json):
+        self.rows = json['rows']
+        self.columns = json['cols']
         self.init_grid()
 
     def init_grid(self):

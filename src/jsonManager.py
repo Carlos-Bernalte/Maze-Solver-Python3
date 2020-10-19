@@ -1,21 +1,23 @@
-import json
+#!/usr/bin/python3
+# -- coding: utf-8 --
+
+from tkinter import filedialog
+import tkinter
+import json, os
 class jsonManager:
-    #grid[]
+    #--Method to choose the file
+    def select():
+        root = tkinter.Tk()
+        root.withdraw()
 
-    def __init__(self):
-        with open("C:\\Users\\ANGEL\\Desktop\\cosas de programar\\repositorios VS\\A1_11\\jsonImput\\puzzle_10x20.json") as f: 
-            data=json.load(f)
-        self.nrows=data['rows']
-        self.ncols=data['cols']
-        self.max_n=data['max_n']
-        self.mov=data['mov']
-        self.id_mov=data['id_mov']
-        #for c in data['cells']:
+        path = filedialog.askopenfilename()
+        return path
 
-
-    
-    def get_nrows(self):
-        return self.nrows
-    def get_ncols(self):
-        return self.ncols
+    #--Metodo para leer el hijo de Jay
+    def read(): 
+        path = jsonManager.select()
+        with open(path, 'r') as output:
+            data = json.load(output)
+            output.close()
+        return data
     

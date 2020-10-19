@@ -1,17 +1,17 @@
-class Cell():
+#!/usr/bin/python3
+# -- coding: utf-8 --
 
-    def __init__(self, x, y):
+class Cell:
+
+    def __init__(self, x, y, neighbours = None, value = 0 ):
         self.position = (x, y)
-        self.value = 0
-        self.neighbours = [False, False, False, False]
+        self.value = value
+        if neighbours is not None: self.neighbours=neighbours
+        else: self.neighbours = [False, False, False, False]
         self.visited = False
-        self.onTrace= False 
+        self.onTrace = False 
         self.come_from = ""
-
-    def __init__(self,x,y,value,neighbours):
-        self.position=(x,y)
-        self.value=value
-        self.neighbours=neighbours
+        
 
     def getNeigh(self):
         return self.neighbours
@@ -47,6 +47,6 @@ class Cell():
             self.neighbours[1]=True
         if direction == "S":
             self.neighbours[2]=True
-        if direction == "W":    
+        if direction == "O":    #Dijo Luis que pusieramos O en vez de W para que no se rayara con su JSON
             self.neighbours[3]=True
     
