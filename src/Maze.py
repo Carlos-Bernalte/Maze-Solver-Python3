@@ -5,12 +5,18 @@ import Cell, random
 
 class Maze:
 
-    grid = []
-    path = []
+    def __init__(self):
+        self.grid = []
+        self.path = []        
 
-    def __init__(self, json):
-        self.rows = json['rows']
-        self.columns = json['cols']
+    def generateRandomMaze(self, rows, columns):
+        self.rows = rows
+        self.columns = columns
+        self.init_grid()
+
+    def generateMazeJSON(self, JSON):
+        self.rows = JSON['rows']
+        self.columns = JSON['cols']
         self.init_grid()
 
     def init_grid(self):
@@ -39,8 +45,8 @@ class Maze:
     def choose_random_cell(self):
         choosen=False
         while not choosen:
-            self.CurrentCellX = random.randint(0, self.columns - 1)
-            self.CurrentCellY = random.randint(0, self.rows - 1)
+            self.CurrentCellX = random.randint(0, self.rows - 1)
+            self.CurrentCellY = random.randint(0, self.columns - 1)
             if self.grid[self.CurrentCellX][self.CurrentCellY].getVisited() == False:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
                 choosen = True
@@ -57,15 +63,15 @@ class Maze:
             elif direction==1 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "E" and self.CurrentCellY+1!=self.columns:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
                 self.CurrentCellY+=1
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("W")
+                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
                 choosen = True
             elif direction==2 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "S" and self.CurrentCellX+1!=self.rows:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
                 self.CurrentCellX+=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
                 choosen = True
-            elif direction==3 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "W" and self.CurrentCellY-1!=-1:
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("W")
+            elif direction==3 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "O" and self.CurrentCellY-1!=-1:
+                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
                 self.CurrentCellY-=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
                 choosen = True
@@ -85,8 +91,7 @@ class Maze:
             self.delete_loop()
             self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
             self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
-            
-            
+
     def iterate(self):
         self.choose_starting_cell()
         while self.check_maze()==False:
