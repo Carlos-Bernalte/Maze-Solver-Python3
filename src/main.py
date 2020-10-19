@@ -1,60 +1,60 @@
 import Maze, pygame, sys, time
-
+import os.path as check
 #---Glogal Variables---#
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 WIDTH=620
 HIGHT=620
-screen = pygame.display.set_mode((WIDTH,HIGHT))
 
-pygame.init()
-screen.fill(WHITE)
+
 
 def parse_argv():
-    if len(sys.argv) != 3:
+    if len(sys.argv) == 3:
+        if  sys.argv[1] == "-f" and check.exists(sys.argv[2]):
+            return 1
+    elif len(sys.argv) ==4:
+        if  sys.argv[1] == "-g":
+            if sys.argv[2].isdigit() and sys.argv[3].isdigit():
+                return 2
+        
+    else:
         print("The number of arguments is wrong.")
         sys.exit()
-    elif(not sys.argv[1].isdigit() or not sys.argv[2].isdigit()):
-        print("The arguments must be digits.")
-        sys.exit()
-def size_window():
-    print()
+
+
+def drawmaze(maze):
+    screen = pygame.display.set_mode((WIDTH,HIGHT))
+    screen.fill(WHITE)
+    sizeCell=600/maze.rows
+    #--Here the maze will be draw
+    for i in range(maze.rows):
+        for j in range(maze.columns):
+            
+            if maze.getMaze()[j][i].getNeigh()[0]==False:
+                pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell +10], 2) #North
+            if maze.getMaze()[j][i].getNeigh()[1]==False:
+                pygame.draw.line(screen, BLACK, [i*sizeCell+sizeCell +10,j*sizeCell+10], [i*sizeCell +10+sizeCell,j*sizeCell+sizeCell +10], 2) #East
+            if maze.getMaze()[j][i].getNeigh()[2]==False:
+                pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell+sizeCell +10], 2) #South
+            if maze.getMaze()[j][i].getNeigh()[3]==False:
+                pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell +10,j*sizeCell+sizeCell +10], 2) #West
+
+    pygame.image.save(screen, "results/Lab_"+str(maze.rows)+"_"+str(maze.columns)+".jpg")
+
 
 def main():
-    #rows=sys.argv[1]
-    #columns=sys.argv[2]
-    rows=100
-    columns=100
-    pygame.display.set_caption("Lab_"+str(rows)+"_"+str(columns))
-
-    sizeCell=600/rows
+    rows=int(sys.argv[2])
+    columns=int(sys.argv[3])
     
-    my_maze = Maze.Maze(columns,rows)
+    my_maze = Maze.Maze(rows,columns)
     my_maze.iterate()
-
-
-    while 1:
-        for Evento in pygame.event.get():
-            if Evento.type == pygame.QUIT:
-                pygame.image.save(screen, "results/Lab_"+str(rows)+"_"+str(columns)+".jpg")
-                sys.exit()
-        #--Here the maze will be draw
-        for i in range(rows):
-            for j in range(columns):
-                if my_maze.getMaze()[j][i].getNeigh()[0]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell +10], 2) #North
-                if my_maze.getMaze()[j][i].getNeigh()[1]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell+sizeCell +10,j*sizeCell+10], [i*sizeCell +10+sizeCell,j*sizeCell+sizeCell +10], 2) #East
-                if my_maze.getMaze()[j][i].getNeigh()[2]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell+sizeCell +10], 2) #South
-                if my_maze.getMaze()[j][i].getNeigh()[3]==False:
-                    pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell +10,j*sizeCell+sizeCell +10], 2) #West
-        pygame.display.flip()
-    pygame.quit()
-
+    drawmaze(my_maze)
 
 if __name__ == '__main__':
-    #parse_argv()
-    main()
+
+    if parse_argv() == 1:
+        print("Opción json")
+    elif parse_argv()== 2:
+        main()
 
