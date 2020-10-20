@@ -7,9 +7,6 @@ import os.path as check
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-WIDTH=620
-HIGHT=620
-
 def parse_argv():
     if len(sys.argv) == 3:
         if  sys.argv[1] == "-f" and check.exists(sys.argv[2]):
@@ -41,9 +38,12 @@ def parse_argv():
 
 
 def drawmaze(maze):
-    screen = pygame.display.set_mode((WIDTH,HIGHT))
+    sizeCell=20
+    WIDTH=sizeCell*maze.rows+20
+    HIGHT=sizeCell*maze.columns+20
+    screen = pygame.display.set_mode((HIGHT,WIDTH))
     screen.fill(WHITE)
-    sizeCell=600/maze.rows
+
     #--Here the maze will be draw
     for i in range(maze.columns):
         for j in range(maze.rows):
@@ -59,11 +59,10 @@ def drawmaze(maze):
 
     pygame.image.save(screen, "results/Lab_"+str(maze.rows)+"_"+str(maze.columns)+".jpg")
 
-
 def main():
-    rows=8
-    columns=8
-    
+    rows=90
+    columns=100
+
     my_maze = Maze.Maze()
     my_maze.generateRandomMaze(rows, columns)
     my_maze.iterate()
@@ -77,7 +76,7 @@ def main2():
     drawmaze(my_maze) 
 
 if __name__ == '__main__':
-    main2()
+    main()
     """
     if parse_argv() == 1:
         print("Opción json")
