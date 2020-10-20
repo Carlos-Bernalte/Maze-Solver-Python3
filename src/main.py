@@ -29,9 +29,6 @@ def parse_argv():
         else:
             print("Option not found.")
             sys.exit()
-
-        #python ./main.py -g 10 8
-        #python ./main.py -f puzzle_10x10.json
     else:
         print("The number of arguments is wrong!\n"
         + "Remember, the correct formats are:\n"
@@ -40,7 +37,7 @@ def parse_argv():
         sys.exit()
 
 
-def drawmaze(maze):
+def drawMaze(maze):
 
     sizeCell=20
     WIDTH = sizeCell * maze.rows + 20
@@ -65,13 +62,18 @@ def drawmaze(maze):
     pygame.image.save(screen, "results/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".jpg")
 
 def main():
-    rows = int(sys.argv[2])
-    columns= int(sys.argv[3])
-
+    rows = 100
+    columns= 50
     my_maze = Maze.Maze()
     my_maze.generateRandomMaze(rows, columns)
     my_maze.iterate()
-    drawmaze(my_maze)
+    drawMaze(my_maze)
+    
+    """
+    myJsonManager= jsonManager.jsonManager()
+    path = "results/JSONLab" + str(rows) + "_" + str(columns) + ".json"
+    myJsonManager.write(path, my_maze)
+    """
 
 def main2():
     json = jsonManager.read(sys.argv[2])
@@ -81,8 +83,10 @@ def main2():
     drawmaze(my_maze)  
 
 if __name__ == '__main__':
-
+    main()
+    """
     if parse_argv() == 1:
         main2()
     elif parse_argv()== 2:
         main()
+    """

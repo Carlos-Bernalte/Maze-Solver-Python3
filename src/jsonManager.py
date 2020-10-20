@@ -5,18 +5,19 @@ from tkinter import filedialog
 import tkinter
 import json, os
 class jsonManager:
+    def __init__(self):
+        pass
 
-    #--Metodo para leer el hijo de Jay
-
-    def read(path):
-        try:
-            with open(path, 'r') as output:
-                data = json.load(output)
-                output.close()
-        except:
-            print("Reading ERROR! The typed file does not exist.")
+    def read(self, file):
+        with open(file, 'r') as output:
+            data = json.load(output)
+            output.close()
         return data
 
+    def write(self, path, maze):
+        with open(path, 'w') as output:
+            if maze is not None: output.write(json.dumps(maze))
+            output.close()
     '''
     def write(name, maze):
         structure = 
