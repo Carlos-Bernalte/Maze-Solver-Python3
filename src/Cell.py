@@ -1,5 +1,8 @@
-class Cell():
+#!/usr/bin/python3
+# -- coding: utf-8 --
 
+class Cell():
+    
     def __init__(self, x, y):
         self.position = (x, y)
         self.value = 0
@@ -8,7 +11,7 @@ class Cell():
         self.onTrace= False
         self.come_from = ""
 
-    def getNeigh(self):
+    def getNeighbours(self):
         return self.neighbours
 
     def getDirection(self):
@@ -33,7 +36,8 @@ class Cell():
     def setDefault(self):
         self.neighbours = [False, False, False, False]
         self.onTrace= False
-    
+    def setNeighbours(self, neighbours):
+        self.neighbours= neighbours
     def setNeighbour(self, direction):
         self.come_from=direction
         if direction == "N":
@@ -42,5 +46,6 @@ class Cell():
             self.neighbours[1]=True
         if direction == "S":
             self.neighbours[2]=True
-        if direction == "W":    
+        if direction == "O":    
             self.neighbours[3]=True
+    

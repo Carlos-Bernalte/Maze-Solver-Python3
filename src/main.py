@@ -1,60 +1,92 @@
-import Maze, pygame, sys, time
+
+#!/usr/bin/python3
+# -- coding: utf-8 --
+
+import Maze, pygame, sys, time, jsonManager
 import os.path as check
-#---Glogal Variables---#
+#---Global Variables---#
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-
-WIDTH=620
-HIGHT=620
-
-
 
 def parse_argv():
     if len(sys.argv) == 3:
         if  sys.argv[1] == "-f" and check.exists(sys.argv[2]):
-            return 1
+            if check.exists(sys.argv[2]):
+                return 1
+            else:
+                print("File not found.")
+                sys.exit()
+        else:
+            print("Option not found.")
+            sys.exit()
+
+
     elif len(sys.argv) ==4:
         if  sys.argv[1] == "-g":
             if sys.argv[2].isdigit() and sys.argv[3].isdigit():
                 return 2
-        
+
+            else:
+                print("Impossible to generate.")
+                sys.exit()
+        else:
+            print("Option not found.")
+            sys.exit()
     else:
-        print("The number of arguments is wrong.")
+        print("The number of arguments is wrong!\n"
+        + "Remember, the correct formats are:\n"
+        + "1.- python ./main.py -g numRows numCols\n"
+        + "2.- python ./main.py -f fileSelected.json")
         sys.exit()
 
 
-def drawmaze(maze):
-    screen = pygame.display.set_mode((WIDTH,HIGHT))
-    screen.fill(WHITE)
-    sizeCell=600/maze.rows
-    #--Here the maze will be draw
-    for i in range(maze.rows):
-        for j in range(maze.columns):
-            
-            if maze.getMaze()[j][i].getNeigh()[0]==False:
-                pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell +10], 2) #North
-            if maze.getMaze()[j][i].getNeigh()[1]==False:
-                pygame.draw.line(screen, BLACK, [i*sizeCell+sizeCell +10,j*sizeCell+10], [i*sizeCell +10+sizeCell,j*sizeCell+sizeCell +10], 2) #East
-            if maze.getMaze()[j][i].getNeigh()[2]==False:
-                pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+sizeCell+10], [i*sizeCell+sizeCell +10,j*sizeCell+sizeCell +10], 2) #South
-            if maze.getMaze()[j][i].getNeigh()[3]==False:
-                pygame.draw.line(screen, BLACK, [i*sizeCell +10,j*sizeCell+10], [i*sizeCell +10,j*sizeCell+sizeCell +10], 2) #West
+def drawMaze(maze):
 
-    pygame.image.save(screen, "results/Lab_"+str(maze.rows)+"_"+str(maze.columns)+".jpg")
-
-
-def main():
-    rows=int(sys.argv[2])
-    columns=int(sys.argv[3])
+    sizeCell=20
+    WIDTH = sizeCell * maze.rows + 20
+    HIGHT = sizeCell * maze.columns + 20
     
-    my_maze = Maze.Maze(rows,columns)
+    screen = pygame.display.set_mode((HIGHT,WIDTH))
+    screen.fill(WHITE)
+
+    #--Here the maze will be drawn
+    for i in range(maze.columns):
+        for j in range(maze.rows):
+            
+            if maze.getMaze()[j][i].getNeighbours()[0]==False:
+                pygame.draw.line(screen, BLACK, [i * sizeCell + 10, j * sizeCell + 10], [i * sizeCell + sizeCell + 10, j * sizeCell + 10], 2) #North
+            if maze.getMaze()[j][i].getNeighbours()[1]==False:
+                pygame.draw.line(screen, BLACK, [i * sizeCell + sizeCell + 10, j * sizeCell + 10], [i * sizeCell + 10 + sizeCell, j * sizeCell + sizeCell + 10], 2) #East
+            if maze.getMaze()[j][i].getNeighbours()[2]==False:
+                pygame.draw.line(screen, BLACK, [i * sizeCell + 10, j * sizeCell + sizeCell + 10], [i * sizeCell + sizeCell +10,j * sizeCell + sizeCell + 10], 2) #South
+            if maze.getMaze()[j][i].getNeighbours()[3]==False:
+                pygame.draw.line(screen, BLACK, [i * sizeCell + 10,j * sizeCell + 10], [i * sizeCell + 10, j * sizeCell + sizeCell + 10], 2) #West
+
+    pygame.image.save(screen, "results/Lab_" + str(maze.columns) + "_" + str(maze.rows) + ".jpg")
+
+def generateLab():
+    rows = int(sys.argv[2])
+    columns= int(sys.argv[3])
+
+    my_maze = Maze.Maze()
+    my_maze.generateRandomMaze(rows, columns)
     my_maze.iterate()
-    drawmaze(my_maze)
+    drawMaze(my_maze)
+    
+    myJsonManager= jsonManager.jsonManager()
+    myJsonManager.write(my_maze)
+
+
+def uploadJson():
+    myJsonManager= jsonManager.jsonManager()
+    my_maze = Maze.Maze()
+    my_maze.generateMazeJSON(myJsonManager.read(sys.argv[2]))
+    drawMaze(my_maze)  
 
 if __name__ == '__main__':
-
-    if parse_argv() == 1:
-        print("Opción json")
-    elif parse_argv()== 2:
-        main()
+    option=parse_argv()
+    if option == 1:
+        uploadJson()
+    elif option== 2:
+        generateLab()
 
