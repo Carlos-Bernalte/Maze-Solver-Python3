@@ -60,23 +60,27 @@ class Maze:
         choosen=False
         while not choosen:
             direction=random.randint(0,3)
+
             if direction==0 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX-1!=-1:
+
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
                 self.CurrentCellX-=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
                 choosen = True
-            elif direction==1 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "E" and self.CurrentCellY+1!=self.columns:
+            elif direction==1 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "W" and self.CurrentCellY+1!=self.columns:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
                 self.CurrentCellY+=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
                 choosen = True
-            elif direction==2 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "S" and self.CurrentCellX+1!=self.rows:
+            elif direction==2 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX+1!=self.rows:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
                 self.CurrentCellX+=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
                 choosen = True
+
             elif direction==3 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "O" and self.CurrentCellY-1!=-1:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
+
                 self.CurrentCellY-=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
                 choosen = True

@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
@@ -19,10 +20,12 @@ def parse_argv():
             print("Option not found.")
             sys.exit()
 
+
     elif len(sys.argv) ==4:
         if  sys.argv[1] == "-g":
             if sys.argv[2].isdigit() and sys.argv[3].isdigit():
                 return 2
+
             else:
                 print("Impossible to generate.")
                 sys.exit()
