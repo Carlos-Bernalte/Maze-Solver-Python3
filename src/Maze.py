@@ -100,3 +100,5 @@ class Maze:
             for cell in self.path:
                 cell.setVisited()
 
+   
+

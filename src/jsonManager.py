@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-from tkinter import filedialog
-import tkinter
 import json, os
 class jsonManager:
     def __init__(self):
@@ -15,21 +13,23 @@ class jsonManager:
         return data
 
     def write(self, path, maze):
+        jsonSolution = structure(maze)
         with open(path, 'w') as output:
-            if maze is not None: output.write(json.dumps(maze))
+            if maze is not None: output.write(json.dumps(jsonSolution))
             output.close()
-    '''
-    def write(name, maze):
-        structure = 
+
+    def structure(maze):
+        x = {}
+        x['rows'] = 
         {
-            "rows": ,
-            "cols": ,
-            "max_n": ,
-            "mov": [[-1, 0], [0, 1], [1, 0], [0, -1]]
-            "id_mov": ["N", "E", "S", "O"]
-            "cells": 
+            'rows': ,
+            'cols': ,
+            'max_n': ,
+            'mov': [[-1, 0], [0, 1], [1, 0], [0, -1]]
+            'id_mov': ["N", "E", "S", "O"]
+            'cells': 
             {
                 "()"
             }
         }
-        '''
+        return x
