@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-import json, os
+import json, os, Maze
 class jsonManager:
     def __init__(self):
         pass
@@ -12,24 +12,15 @@ class jsonManager:
             output.close()
         return data
 
-    def write(self, path, maze):
-        jsonSolution = structure(maze)
-        with open(path, 'w') as output:
-            if maze is not None: output.write(json.dumps(jsonSolution))
-            output.close()
-
-    def structure(maze):
-        x = {}
-        x['rows'] = 
-        {
-            'rows': ,
-            'cols': ,
-            'max_n': ,
-            'mov': [[-1, 0], [0, 1], [1, 0], [0, -1]]
-            'id_mov': ["N", "E", "S", "O"]
-            'cells': 
-            {
-                "()"
-            }
-        }
-        return x
+    def write(self, maze):
+        jsonFile= {"rows": maze.rows, "cols": maze.columns, "max_n": 4, "mov": [[-1, 0], [0, 1], [1, 0], [0, -1]], "id_mov": ["N", "E", "S", "O"], "cells": {}}
+        for i in range(maze.rows):
+            for j in range(maze.columns):
+                print(i, " ", j)
+                
+                cell={"("+str(i)+", "+ str(j) +")": {"value": 0, "neighbors": maze.getMaze()[i][j].getNeighbours()}}
+                
+                jsonFile["cells"].update(cell)
+        
+        with open("results/Lab_"+str(maze.rows) + "_" + str(maze.columns) + ".json", "w") as file:
+            json.dump(jsonFile, file, indent=4)

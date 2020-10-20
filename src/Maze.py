@@ -27,6 +27,7 @@ class Maze:
     
     def getMaze(self):
         return self.grid
+
     #--Checks if the maze is completed (all the cells are visited)
     def checkMaze(self):
         complete=True

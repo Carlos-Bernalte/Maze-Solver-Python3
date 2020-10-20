@@ -11,7 +11,7 @@ class Cell():
         self.onTrace= False
         self.come_from = ""
 
-    def getNeigh(self):
+    def getNeighbours(self):
         return self.neighbours
 
     def getDirection(self):

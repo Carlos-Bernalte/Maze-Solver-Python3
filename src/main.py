@@ -50,13 +50,13 @@ def drawMaze(maze):
     for i in range(maze.columns):
         for j in range(maze.rows):
             
-            if maze.getMaze()[j][i].getNeigh()[0]==False:
+            if maze.getMaze()[j][i].getNeighbours()[0]==False:
                 pygame.draw.line(screen, BLACK, [i * sizeCell + 10, j * sizeCell + 10], [i * sizeCell + sizeCell + 10, j * sizeCell + 10], 2) #North
-            if maze.getMaze()[j][i].getNeigh()[1]==False:
+            if maze.getMaze()[j][i].getNeighbours()[1]==False:
                 pygame.draw.line(screen, BLACK, [i * sizeCell + sizeCell + 10, j * sizeCell + 10], [i * sizeCell + 10 + sizeCell, j * sizeCell + sizeCell + 10], 2) #East
-            if maze.getMaze()[j][i].getNeigh()[2]==False:
+            if maze.getMaze()[j][i].getNeighbours()[2]==False:
                 pygame.draw.line(screen, BLACK, [i * sizeCell + 10, j * sizeCell + sizeCell + 10], [i * sizeCell + sizeCell +10,j * sizeCell + sizeCell + 10], 2) #South
-            if maze.getMaze()[j][i].getNeigh()[3]==False:
+            if maze.getMaze()[j][i].getNeighbours()[3]==False:
                 pygame.draw.line(screen, BLACK, [i * sizeCell + 10,j * sizeCell + 10], [i * sizeCell + 10, j * sizeCell + sizeCell + 10], 2) #West
 
     pygame.image.save(screen, "results/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".jpg")
@@ -69,11 +69,9 @@ def main():
     my_maze.iterate()
     drawMaze(my_maze)
     
-    """
     myJsonManager= jsonManager.jsonManager()
-    path = "results/JSONLab" + str(rows) + "_" + str(columns) + ".json"
-    myJsonManager.write(path, my_maze)
-    """
+    myJsonManager.write(my_maze)
+
 
 def main2():
     json = jsonManager.read(sys.argv[2])
