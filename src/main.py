@@ -38,9 +38,11 @@ def parse_argv():
 
 
 def drawmaze(maze):
+
     sizeCell=20
     WIDTH=sizeCell*maze.rows+20
     HIGHT=sizeCell*maze.columns+20
+    
     screen = pygame.display.set_mode((HIGHT,WIDTH))
     screen.fill(WHITE)
 
@@ -59,9 +61,10 @@ def drawmaze(maze):
 
     pygame.image.save(screen, "results/Lab_"+str(maze.rows)+"_"+str(maze.columns)+".jpg")
 
+
 def main():
-    rows=90
-    columns=100
+    rows=9
+    columns=10
 
     my_maze = Maze.Maze()
     my_maze.generateRandomMaze(rows, columns)
@@ -73,7 +76,7 @@ def main2():
 
     my_maze = Maze.Maze()
     my_maze.generateMazeJSON(json.getData())
-    drawmaze(my_maze) 
+    drawmaze(my_maze)  
 
 if __name__ == '__main__':
     main()
