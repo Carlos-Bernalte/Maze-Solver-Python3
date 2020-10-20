@@ -48,6 +48,8 @@ These are the libraries we have used to write the code of:
   This method drows the maze into an image
   - **jasonManage.read(path):data**<br>
   This method is used to read the json
+  - **jasonManager.write(Maze)**<br>
+  This method is used to write the json
 
 ## OUTPUT
   - json
