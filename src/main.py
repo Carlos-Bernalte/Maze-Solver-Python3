@@ -8,7 +8,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 def parse_argv():
-    if len(sys.argv) == 3: #Option using .json file
+    if len(sys.argv) == 3:
         if  sys.argv[1] == "-f" and check.exists(sys.argv[2]):
             if check.exists(sys.argv[2]):
                 return 1
@@ -19,7 +19,7 @@ def parse_argv():
             print("Option not found.")
             sys.exit()
 
-    elif len(sys.argv) ==4: #Option typing Maze size
+    elif len(sys.argv) ==4:
         if  sys.argv[1] == "-g":
             if sys.argv[2].isdigit() and sys.argv[3].isdigit():
                 return 2
@@ -59,11 +59,12 @@ def drawMaze(maze):
             if maze.getMaze()[j][i].getNeighbours()[3]==False:
                 pygame.draw.line(screen, BLACK, [i * sizeCell + 10,j * sizeCell + 10], [i * sizeCell + 10, j * sizeCell + sizeCell + 10], 2) #West
 
-    pygame.image.save(screen, "results/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".jpg")
+    pygame.image.save(screen, "results/Lab_" + str(maze.columns) + "_" + str(maze.rows) + ".jpg")
 
-def main():
-    rows = 100
-    columns= 50
+def generateLab():
+    rows = int(sys.argv[2])
+    columns= int(sys.argv[3])
+
     my_maze = Maze.Maze()
     my_maze.generateRandomMaze(rows, columns)
     my_maze.iterate()
@@ -73,18 +74,16 @@ def main():
     myJsonManager.write(my_maze)
 
 
-def main2():
-    json = jsonManager.read(sys.argv[2])
-
+def uploadJson():
+    myJsonManager= jsonManager.jsonManager()
     my_maze = Maze.Maze()
-    my_maze.generateMazeJSON(json)
-    drawmaze(my_maze)  
+    my_maze.generateMazeJSON(myJsonManager.read(sys.argv[2]))
+    drawMaze(my_maze)  
 
 if __name__ == '__main__':
-    main()
-    """
-    if parse_argv() == 1:
-        main2()
-    elif parse_argv()== 2:
-        main()
-    """
+    option=parse_argv()
+    if option == 1:
+        uploadJson()
+    elif option== 2:
+        generateLab()
+

@@ -18,6 +18,10 @@ class Maze:
         self.rows = JSON['rows']
         self.columns = JSON['cols']
         self.initLab()
+        for i in range(self.rows):
+            for j in range(self.columns):
+                self.grid[i][j].neighbours=JSON["cells"]["(" + str(i) + ", " + str(j) + ")"]["neighbors"]
+
 
     def initLab(self):
         for i in range(self.rows):
@@ -51,7 +55,7 @@ class Maze:
             if self.grid[self.CurrentCellX][self.CurrentCellY].getVisited() == False:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
                 choosen = True
-    #--Elige la dirección de donde viene comprobando que no puede volver a la dirección de donde viene, asi como salirse de los limites
+    #--Choose the direction you come from, checking that you cannot go back to the direction you came from, as well as you cannot go out of bounds
     def randomizeDir(self):
         choosen=False
         while not choosen:
@@ -100,6 +104,4 @@ class Maze:
             self.generateLab()
             for cell in self.path:
                 cell.setVisited()
-
-   
 

@@ -36,7 +36,8 @@ class Cell():
     def setDefault(self):
         self.neighbours = [False, False, False, False]
         self.onTrace= False
-    
+    def setNeighbours(self, neighbours):
+        self.neighbours= neighbours
     def setNeighbour(self, direction):
         self.come_from=direction
         if direction == "N":
