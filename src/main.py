@@ -2,11 +2,9 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-import Maze, pygame, sys, time, jsonManager
+import Maze, sys, time, jsonManager
+from PIL import Image, ImageDraw
 import os.path as check
-#---Global Variables---#
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
 
 def parse_argv():
     if len(sys.argv) == 3:
@@ -45,24 +43,24 @@ def drawMaze(maze):
     sizeCell=20
     WIDTH = sizeCell * maze.rows + 20
     HIGHT = sizeCell * maze.columns + 20
-    
-    screen = pygame.display.set_mode((HIGHT,WIDTH))
-    screen.fill(WHITE)
+
+    im = Image.new("RGB", (WIDTH, HIGHT), (255, 255, 255))
+    draw = ImageDraw.Draw(im)
 
     #--Here the maze will be drawn
     for i in range(maze.columns):
         for j in range(maze.rows):
             
             if maze.getMaze()[j][i].getNeighbours()[0]==False:
-                pygame.draw.line(screen, BLACK, [i * sizeCell + 10, j * sizeCell + 10], [i * sizeCell + sizeCell + 10, j * sizeCell + 10], 2) #North
+                draw.line((i*sizeCell+10, j*sizeCell+10, i*sizeCell+sizeCell+10, j*sizeCell+10), fill=0) #North
             if maze.getMaze()[j][i].getNeighbours()[1]==False:
-                pygame.draw.line(screen, BLACK, [i * sizeCell + sizeCell + 10, j * sizeCell + 10], [i * sizeCell + 10 + sizeCell, j * sizeCell + sizeCell + 10], 2) #East
+                draw.line((i*sizeCell+sizeCell+10, j*sizeCell+10, i*sizeCell+10+sizeCell, j*sizeCell+sizeCell+10), fill=0) #East
             if maze.getMaze()[j][i].getNeighbours()[2]==False:
-                pygame.draw.line(screen, BLACK, [i * sizeCell + 10, j * sizeCell + sizeCell + 10], [i * sizeCell + sizeCell +10,j * sizeCell + sizeCell + 10], 2) #South
+                draw.line((i*sizeCell+10, j*sizeCell+sizeCell+10, i*sizeCell+sizeCell+10, j*sizeCell+sizeCell+10), fill=0) #South
             if maze.getMaze()[j][i].getNeighbours()[3]==False:
-                pygame.draw.line(screen, BLACK, [i * sizeCell + 10,j * sizeCell + 10], [i * sizeCell + 10, j * sizeCell + sizeCell + 10], 2) #West
+                draw.line((i*sizeCell+10, j*sizeCell+10, i*sizeCell+10, j*sizeCell+sizeCell+10), fill=0) #West
 
-    pygame.image.save(screen, "results/Lab_" + str(maze.columns) + "_" + str(maze.rows) + ".jpg")
+    im.save("results/Lab_" + str(maze.columns) + "_" + str(maze.rows) + ".jpg")
 
 def generateLab():
     rows = int(sys.argv[2])
