@@ -25,10 +25,27 @@ class Frontier:
         if (len(self.frontier)==0):
             self.frontier.append(node)
         else:
-            x=0
-            while x< len(self.frontier):
-                if (self.frontier[x].idState.equals(node.idState)):
+            x=len(self.frontier)-1
+            while x>=0:
+                if((self.frontier[x].value < node.value)):
+                    self.frontier.insert(x+1,node)
                     break
-                x+=1
-            if x==len(self.frontier):
-                self.frontier.insert(len(self.frontier),node)
+                else: 
+                    if(self.frontier[x].value == node.value):
+                        if(self.frontier[x].idState[0] < node.idState[0]):
+                            self.frontier.insert(x+1,node)
+                            break
+                        else:
+                            if(self.frontier[x].idState[0] == node.idState[0]):
+                                if(self.frontier[x].idState[1] < node.idState[1]):
+                                    self.frontier.insert(x+1,node)
+                                    break
+                                else:
+                                    if(self.frontier[x].idState[1] == node.idState[1]):
+                                        self.frontier.insert(x+1,node)
+                                    break
+                if (x == 0 and (node.value < self.frontier[x].value or (node.value == self.frontier[x].value and (node.idState[0] < self.frontier[x].idState[0])) or ((node.value == self.frontier[x].value) and (node.idState[0] == self.frontier[x].idState[1]) and (node.idState[0] < self.frontier[x].idState[1]))))):
+                    self.frontier.insert(0,node)
+
+                x= x-1
+            self.frontier.insert(x+1,node)
