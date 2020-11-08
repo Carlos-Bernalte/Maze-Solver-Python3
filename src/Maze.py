@@ -13,6 +13,7 @@ class Maze:
         self.rows = rows
         self.columns = columns
         self.initLab()
+        self.iterate()
 
     def generateMazeJSON(self, JSON):
         self.rows = JSON['rows']

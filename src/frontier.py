@@ -15,7 +15,7 @@ class Frontier:
         else:
             return True
 
-    def insertLis(self, nodeList):
+    def insertList(self, nodeList):
         if(nodeList is not None):
             for node in nodeList:
                 self.inserNode(node)

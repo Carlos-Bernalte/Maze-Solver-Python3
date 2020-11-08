@@ -3,8 +3,10 @@
 
 import Maze, Cell
 class Node:
-    def __init__(self, idNode, cost, idState, idParent, action, depth, heuristic, value):
-        self.idNode = idNode #It will increase with the creation of new nodes (starts in 0)
+    idNode=0
+    def __init__(self, cost, idState, idParent, action, depth, heuristic, value):
+        self.idNode = Node.idNode #It will increase with the creation of new nodes (starts in 0)
+        Node.idNode+=1
         self.cost = cost #Accumulated cost by the path to that node
         self.idState = idState #Access to the space state in that node
         self.idParent = idParent #Access to the parent node
