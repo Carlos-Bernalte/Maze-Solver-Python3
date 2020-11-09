@@ -44,12 +44,11 @@ In this document .txt you can find all the commands to install the required libr
   - **Frontier**: The purpose of this class is manage the implementation of the Frotier.
   - **Node**: This class already has the properties of the nodes.
   - **SpeedTest**: The purpose of this class is to explain which data structure we have selected. As Python groups lists, stacks and queues on the list type we cannot test them independently, in its place Python offers us sets, dictionaries and tuples. As dictionaries need a key for each entry, we are not going to test them. Tuples are the slowest of the remaining three, apart from the fact that you cannot remove any item, you can only group them. The difference between sets and lists is that both are very fast introducing new elements, and when there are few elements to be introduced sets are actually faster than lists, but when you introduce more elements sets start introducing them slower than lists.
-  -**Drawer**: The purpose of this class is to draw the maze and in the future, to draw the path using the selected strategy.
-  -**Functions**: This class contains the algorithm to create the Successor Function of the Maze executed.
+  - **Drawer**: The purpose of this class is to draw the maze and in the future, to draw the path using the selected strategy.
+  - **Functions**: This class contains the algorithm to create the Successor Function of the Maze executed.
 
 ## Output
 ```sh
   - json
   - image.png
 ```
-
