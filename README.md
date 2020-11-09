@@ -27,7 +27,14 @@ These are the libraries we have used to write the code of:
   - Json
   - sys
   - random
+  - Tkinter
 ```
+**You can install all of the external libraries with:** <br>
+
+```sh
+ pip install -r requirements.txt
+```
+In this document .txt you can find all the commands to install the required libraries but you can install all of them with the above command.
 
 ## Classes
   - **Main**:This is the main class of the project which makes everything work as intended
@@ -44,3 +51,4 @@ These are the libraries we have used to write the code of:
   - json
   - image.png
 ```
+
