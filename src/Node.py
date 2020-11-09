@@ -3,7 +3,7 @@
 
 import Maze, Cell
 class Node:
-    idNode=0
+    idNode=1
     def __init__(self, cost, idState, idParent, action, depth, heuristic, value):
         self.idNode = Node.idNode #It will increase with the creation of new nodes (starts in 0)
         Node.idNode+=1

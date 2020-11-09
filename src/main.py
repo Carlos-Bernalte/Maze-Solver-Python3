@@ -2,7 +2,7 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-import Maze, sys, JsonManager, Drawer, Functions
+import Maze, sys, JsonManager, Drawer, Functions, frontier, Node
 import os.path as check
 
 def subTask1():
@@ -21,6 +21,19 @@ def subTask2():
     Drawer.drawMaze(my_maze)
     frontier=Functions.succersorFunction(["N",(0,0),1], my_maze.getMaze())
     #Drawer.drawPath(frontier,my_maze)
+def prueba3():
+    node1=Node.Node(1,(0,4),None,None,None,None,1)
+    node2=Node.Node(1,(0,1),None,None,None,None,1)
+    node3=Node.Node(1,(1,0),None,None,None,None,1)
+    node4=Node.Node(1,(2,0),None,None,None,None,1)
+
+    front=frontier.Frontier()
+    front.insertNode(node1)
+    front.insertNode(node2)
+    front.insertNode(node3)
+    front.insertNode(node4)
+    for node in front.frontier:
+        print(node.idNode)
 
 if __name__ == '__main__':
     print("##### Choose what you want to do: #####\n •(1) Generate a random maze.\n •(2) Create a maze from JSON." )
@@ -29,3 +42,5 @@ if __name__ == '__main__':
         subTask1()
     elif answer== 2:
         subTask2()
+    elif answer== 3:
+        prueba3()
