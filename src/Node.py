@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-import Maze, Cell
 class Node:
-    idNode=1
+    idNode=0
     def __init__(self, cost, idState, idParent, action, depth, heuristic, value):
         self.idNode = Node.idNode #It will increase with the creation of new nodes (starts in 0)
         Node.idNode+=1

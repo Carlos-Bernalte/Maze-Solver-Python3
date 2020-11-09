@@ -39,7 +39,7 @@ class Frontier:
                             if(self.frontier[x].idState[1] < node.idState[1] or self.frontier[x].idState[1] == node.idState[1]):
                                 self.frontier.insert(x+1,node)
                                 break
-
-                if (x == 0 and (node.value < self.frontier[x].value or (node.value == self.frontier[x].value and (node.idState[0] < self.frontier[x].idState[0])) or ((node.value == self.frontier[x].value) and (node.idState[0] == self.frontier[x].idState[1]) and (node.idState[0] < self.frontier[x].idState[1])))):
+                if (x==0):
                     self.frontier.insert(0,node)
+
                 x= x-1

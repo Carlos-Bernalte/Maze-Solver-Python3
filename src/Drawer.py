@@ -1,7 +1,5 @@
 from PIL import Image, ImageDraw
 
-
-
 def drawMaze(maze):
     sizeCell=20
     
