@@ -1,5 +1,5 @@
 # A1_11
-This repository is destined to be the place of work for "Intelligent systems" class of Informatics Engineering  of UCLM 2020/2021
+This repository is destined to be the place of work for "Intelligent Systems" class of Informatics Engineering  of UCLM 2020/2021
 
 # Wilson's algorithm
 Wilson’s algorithm uses loop-erased random walks to generate a uniform spanning tree — an unbiased sample of all possible spanning trees.<br>
@@ -11,11 +11,12 @@ In order to execute this program you must have installed python3, and execute on
 The first command will generate a random maze using the number of rows or columns you have selected and the second one will generate one from the json file you have selected
 ## Required libraries
 These are the libraries we have used to write the code of: 
+´´´sh
   - pillow
   - json
   - sys
   - random
-
+´´´
 ## Classes
   - **main**:This is the main class of the project which makes everything work as intended
   - **jsonManager**:This class is used to read and write the .json files
