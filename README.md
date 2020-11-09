@@ -11,7 +11,7 @@ In order to execute this program you must have installed python3, and execute on
 The first command will generate a random maze using the number of rows or columns you have selected and the second one will generate one from the json file you have selected
 ## Required libraries
 These are the libraries we have used to write the code of: 
-  - pygame
+  - pillow
   - json
   - sys
   - random
