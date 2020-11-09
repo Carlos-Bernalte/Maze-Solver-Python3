@@ -27,23 +27,14 @@ def subTask2():
     my_maze.generateMazeJSON(JsonManager.read(filedialog.askopenfilename()))
     Drawer.drawMaze(my_maze)
 
-
-def testFrontier():
-    node1=Node.Node(1,(0,4),None,None,None,None,5)
-    node2=Node.Node(1,(0,1),None,None,None,None,1)
-    node3=Node.Node(1,(1,0),None,None,None,None,2)
-    node4=Node.Node(1,(2,0),None,None,None,None,1)
-
-    front=Frontier.Frontier()
-    front.insertNode(node1)
-    front.insertNode(node2)
-    front.insertNode(node3)
-    front.insertNode(node4)
-    
-    for node in front.frontier:
-        print(node.idNode)
+def subTask3():
+    my_maze=Maze.Maze()
+    my_maze.generateMazeJSON(JsonManager.read(filedialog.askopenfilename()))
+    Drawer.drawMaze(my_maze)
 
 if __name__ == '__main__':
+    subTask3()
+    """
     answer=-1
     while answer < 0 or answer >3:
         print("##### Choose what you want to do: #####\n •(1) Generate a random maze.\n •(2) Create a maze from JSON.\n •(3) Test insertion on frontier." )
@@ -58,4 +49,4 @@ if __name__ == '__main__':
                 subTask2()
             elif answer== 3:
                 testFrontier()
-                
+    """
