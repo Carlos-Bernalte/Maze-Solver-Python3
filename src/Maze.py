@@ -22,7 +22,7 @@ class Maze:
         for i in range(self.rows):
             for j in range(self.columns):
                 self.grid[i][j].neighbours=JSON["cells"]["(" + str(i) + ", " + str(j) + ")"]["neighbors"]
-                self.grid[i][j].neighbours=JSON["cells"]["(" + str(i) + ", " + str(j) + ")"]["value"]
+                self.grid[i][j].value=JSON["cells"]["(" + str(i) + ", " + str(j) + ")"]["value"]
 
 
     def initLab(self):

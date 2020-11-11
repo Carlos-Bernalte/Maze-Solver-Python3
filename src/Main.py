@@ -5,7 +5,10 @@
 from typing import final
 import Maze, sys, JsonManager, Drawer, Functions, Frontier, Node
 import os.path as check
-from tkinter import filedialog
+from tkinter.filedialog import askopenfilename
+from tkinter import Tk
+
+Tk().withdraw()
 
 def subTask1():
     rows, columns=-1,-1
@@ -23,13 +26,15 @@ def subTask1():
     JsonManager.write(my_maze)
 
 def subTask2():
+
     my_maze=Maze.Maze()
-    my_maze.generateMazeJSON(JsonManager.read(filedialog.askopenfilename()))
+    my_maze.generateMazeJSON(JsonManager.read(askopenfilename()))
     Drawer.drawMaze(my_maze)
 
 def subTask3():
+    
     my_maze=Maze.Maze()
-    my_maze.generateMazeJSON(JsonManager.read(filedialog.askopenfilename()))
+    my_maze.generateMazeJSON(JsonManager.read(askopenfilename()))
     Drawer.drawMaze(my_maze)
 
 if __name__ == '__main__':
