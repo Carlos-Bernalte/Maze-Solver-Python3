@@ -3,7 +3,9 @@
 # -- coding: utf-8 --
 
 from typing import final
-import Maze, sys, JsonManager, Drawer, Functions, Frontier, Node
+import Maze, JsonManager, Drawer
+from Problem import Problem
+from SearchSolution import searchAlgorithm
 import os.path as check
 from tkinter.filedialog import askopenfilename
 from tkinter import Tk
@@ -34,10 +36,20 @@ def subTask2():
 def subTask3():
     
     my_maze=Maze.Maze()
-    my_maze.generateMazeJSON(JsonManager.read(askopenfilename()))
-    Drawer.drawMaze(my_maze)
+    problem=JsonManager.read("examples/problema_5x5.json")
+    my_maze.generateMazeJSON(JsonManager.read("examples/"+str(problem["MAZE"])))
+    
+    prob=Problem(problem["INITIAL"],problem["OBJETIVE"],"asd")
+    sol=searchAlgorithm(prob,my_maze.getMaze())
+    print("[id][cost,state,father_id,action,depth,h,value]")
+
+    for node in sol:
+        print(node.toString())
+    Drawer.drawPath(sol, my_maze)
+
 
 if __name__ == '__main__':
+
     subTask3()
     """
     answer=-1
@@ -53,5 +65,5 @@ if __name__ == '__main__':
             elif answer== 2:
                 subTask2()
             elif answer== 3:
-                testFrontier()
+                subTask3()
     """

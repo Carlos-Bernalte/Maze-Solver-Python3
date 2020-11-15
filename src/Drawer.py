@@ -15,22 +15,22 @@ def drawMaze(maze):
     
     WIDTH = sizeCell * maze.rows + 20
     HIGHT = sizeCell * maze.columns + 20
-
+    displ=9
     im = Image.new("RGB", (HIGHT,WIDTH), (255, 255, 255))
     draw = ImageDraw.Draw(im)
     for i in range(maze.columns):
         for j in range(maze.rows):
-            draw.rectangle([(i*sizeCell+10,j*sizeCell+10),(i*sizeCell+sizeCell+10,j*sizeCell+sizeCell+10)], typeOfBox(maze.getMaze()[j][i].value))
+            draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.getMaze()[j][i].value))
     for i in range(maze.columns):
         for j in range(maze.rows):
             if maze.getMaze()[j][i].getNeighbours()[0]==False:
-                draw.line((i*sizeCell+10, j*sizeCell+10, i*sizeCell+sizeCell+10, j*sizeCell+10), WALLS, 2) #North
+                draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+displ), WALLS, 2) #North
             if maze.getMaze()[j][i].getNeighbours()[1]==False:
-                draw.line((i*sizeCell+sizeCell+10, j*sizeCell+10, i*sizeCell+10+sizeCell, j*sizeCell+sizeCell+10), WALLS, 2) #East
+                draw.line((i*sizeCell+sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #East
             if maze.getMaze()[j][i].getNeighbours()[2]==False:
-                draw.line((i*sizeCell+10, j*sizeCell+sizeCell+10, i*sizeCell+sizeCell+10, j*sizeCell+sizeCell+10), WALLS, 2) #South
+                draw.line((i*sizeCell+displ, j*sizeCell+sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #South
             if maze.getMaze()[j][i].getNeighbours()[3]==False:
-                draw.line((i*sizeCell+10, j*sizeCell+10, i*sizeCell+10, j*sizeCell+sizeCell+10), WALLS, 2) #West
+                draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
 
     im.show()
     #im.save("results/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".jpg")
@@ -41,24 +41,28 @@ def drawPath(frontier, maze):
     
     WIDTH = sizeCell * maze.rows + 20
     HIGHT = sizeCell * maze.columns + 20
-
+    displ=9 
     im = Image.new("RGB", (HIGHT,WIDTH), (255, 255, 255))
     draw = ImageDraw.Draw(im)
+
+    for i in range(maze.columns):
+        for j in range(maze.rows):
+            draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.getMaze()[j][i].value))
     for node in frontier:
-        position=node[1]
-        draw.rectangle([(position[0]*sizeCell+10,position[1]*sizeCell+10),(position[0]*sizeCell+sizeCell+10,position[1]*sizeCell+sizeCell+10)], fill=(0, 166, 255))
+        position=node.idState
+        draw.rectangle([(position[1]*sizeCell+displ,position[0]*sizeCell+displ),(position[1]*sizeCell+sizeCell+displ,position[0]*sizeCell+sizeCell+displ)], PATH)
     
     for i in range(maze.columns):
         for j in range(maze.rows):
             
             if maze.getMaze()[j][i].getNeighbours()[0]==False:
-                draw.line((i*sizeCell+10, j*sizeCell+10, i*sizeCell+sizeCell+10, j*sizeCell+10), fill=0) #North
+                draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+displ), WALLS, 2) #North
             if maze.getMaze()[j][i].getNeighbours()[1]==False:
-                draw.line((i*sizeCell+sizeCell+10, j*sizeCell+10, i*sizeCell+10+sizeCell, j*sizeCell+sizeCell+10), fill=0) #East
+                draw.line((i*sizeCell+sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #East
             if maze.getMaze()[j][i].getNeighbours()[2]==False:
-                draw.line((i*sizeCell+10, j*sizeCell+sizeCell+10, i*sizeCell+sizeCell+10, j*sizeCell+sizeCell+10), fill=0) #South
+                draw.line((i*sizeCell+displ, j*sizeCell+sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #South
             if maze.getMaze()[j][i].getNeighbours()[3]==False:
-                draw.line((i*sizeCell+10, j*sizeCell+10, i*sizeCell+10, j*sizeCell+sizeCell+10), fill=0) #West
+                draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
     im.show()
     #im.save("results/Resolved_Lab_" + str(maze.columns) + "_" + str(maze.rows) + ".jpg")
 

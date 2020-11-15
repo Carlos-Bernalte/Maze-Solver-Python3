@@ -18,7 +18,7 @@ class Frontier:
     def insertList(self, nodeList):
         if(nodeList is not None):
             for node in nodeList:
-                self.inserNode(node)
+                self.insertNode(node)
 
 
     def insertNode(self, node):
@@ -35,7 +35,7 @@ class Frontier:
                         self.frontier.insert(x+1,node)
                         break
                     else:
-                        if(self.frontier[x].idState[0] == node.idState[0]):
+                        if(self.frontier[x].idState[0] == node.idState[0]): #FILA MAYOR
                             if(self.frontier[x].idState[1] < node.idState[1] or self.frontier[x].idState[1] == node.idState[1]):
                                 self.frontier.insert(x+1,node)
                                 break
@@ -43,3 +43,4 @@ class Frontier:
                     self.frontier.insert(0,node)
 
                 x= x-1
+
