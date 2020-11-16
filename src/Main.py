@@ -2,11 +2,10 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-from typing import final
 import Maze, JsonManager, Drawer
 from Problem import Problem
 from SearchSolution import searchAlgorithm
-import os.path as check
+
 from tkinter.filedialog import askopenfilename
 from tkinter import Tk
 
@@ -34,19 +33,19 @@ def subTask2():
     Drawer.drawMaze(my_maze)
 
 def subTask3():
-    
     my_maze=Maze.Maze()
-    problem=JsonManager.read("examples/problema_5x5.json")
+    problem=JsonManager.read(askopenfilename())
     my_maze.generateMazeJSON(JsonManager.read("examples/"+str(problem["MAZE"])))
-    
-    prob=Problem(problem["INITIAL"],problem["OBJETIVE"],"asd")
-    sol=searchAlgorithm(prob,my_maze.getMaze())
-    print("[id][cost,state,father_id,action,depth,h,value]")
 
-    for node in sol:
-        print(node.toString())
-    Drawer.drawPath(sol, my_maze)
+    strategy=-1
+    while strategy != "BREADTH" and strategy != "DEPTH" and strategy != "GREEDY" and strategy != "UNIFORM" and strategy != "'A":
+        print("Strategies available: [BREADTH, DEPTH, GREEDY, UNIFORM, 'A]")
+        strategy=input("• Choose your stratrgy to solve: ")
+        print()
 
+
+    prob=Problem(problem["INITIAL"][1:-1].split(","),problem["OBJETIVE"][1:-1].split(","),strategy)
+    searchAlgorithm(prob,my_maze)
 
 if __name__ == '__main__':
 

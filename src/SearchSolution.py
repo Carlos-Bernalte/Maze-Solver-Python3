@@ -2,37 +2,52 @@ import Problem
 import Frontier
 import Node
 from Functions import succerssorFunction
-def searchAlgorithm(problem=Problem, maze=[]):
-    ite=0
+from Drawer import drawSolution
+
+def searchAlgorithm(problem, maze):
+    depth=0
+    sol=None
     closed=[]
     fringe=Frontier.Frontier()
-    heuristic=abs(problem.initial[0]-problem.objective[0])+abs(problem.initial[1]-problem.objective[1])
-    fringe.insertNode(Node.Node(problem.initial,0,None,None,0,heuristic,8))
+    fringe.insertNode(Node.Node(problem.initial,0,None,None,0,heuristic(problem.initial, problem.objective),heuristic(problem.initial, problem.objective)))
     while(1):
-        if fringe.isEmpty():
+        if depth==1000000:
+            print("The algorithm arrrives to the limit of iteractions")
+            break
+        elif fringe.isEmpty():
             print("The frontier is empty.")
-            return None
+            break
         else:
             currentNode=fringe.removeNode()
-            print(currentNode.idState)
             if problem.goal(currentNode.idState):
-                print("SOLUCION CON ", ite, "ITERACCIONES")
-                return solution(currentNode)
-            if isIn(currentNode, closed):
-                print("CUT")
-            else:
-                neighbors=succerssorFunction(currentNode, maze)
-                fringe.insertList(initNodes(currentNode, neighbors, problem.objective))
+                sol=solution(currentNode)
+                break
+            if not isIn(currentNode, closed):
+                neighbors=succerssorFunction(currentNode, maze.getMaze())
+                fringe.insertList(initNodes(currentNode, neighbors, problem.objective, problem.strategy))
                 closed.append(currentNode)
-        ite+=1
+                depth+=1
+    drawSolution(sol,fringe.frontier,closed, maze)
 
-def initNodes(currentNode=Node, neighbors=[], objective=()):
+def initNodes(currentNode=Node, neighbors=[], objective=(), s=""):
     listNode=[]
     for neig in neighbors:
         cost=currentNode.cost+neig[2]+1
-        heuristic=abs(neig[1][0]-objective[0])+abs(neig[1][1]-objective[1])
-        value=cost+heuristic
-        node=Node.Node(neig[1],currentNode.cost+neig[2]+1,currentNode,neig[0], currentNode.depth+1, heuristic, value)
+        f=heuristic(neig[1], objective)
+        value=cost+f
+        
+        if s == "BREADTH":
+            value=currentNode.depth+1
+        elif s == "DEPTH":
+            value=1/(currentNode.depth+1)
+        elif s == "GREEDY":
+            value=f
+        elif s == "UNIFORM":
+            value=currentNode.cost
+        elif s =="'A":
+            value=cost+f
+
+        node=Node.Node(neig[1],currentNode.cost+neig[2]+1,currentNode,neig[0], currentNode.depth+1,f, value)
         listNode.append(node)
     return listNode
 
@@ -43,14 +58,14 @@ def isIn(currentNode, closed):
             return True
     return False
 
-def heuristic(self, currentNode):
-    return abs(currentNode[0]-self.objetive[0])+abs(currentNode[1]-self.objetive[1])
+def heuristic(currentNode, objective):
+    return abs(currentNode[0]-objective[0])+abs(currentNode[1]-objective[1])
 
 def solution(nodeSolution):
     sol = []
     node = nodeSolution
     while node is not None:
-        sol.append(node)
+        sol.insert(0,node)
         node = node.parent
     return sol
         

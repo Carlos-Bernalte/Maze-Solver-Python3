@@ -35,12 +35,11 @@ class Frontier:
                         self.frontier.insert(x+1,node)
                         break
                     else:
-                        if(self.frontier[x].idState[0] == node.idState[0]): #FILA MAYOR
+                        if(self.frontier[x].idState[0] == node.idState[0]):
                             if(self.frontier[x].idState[1] < node.idState[1] or self.frontier[x].idState[1] == node.idState[1]):
                                 self.frontier.insert(x+1,node)
                                 break
                 if (x==0):
                     self.frontier.insert(0,node)
-
                 x= x-1
 

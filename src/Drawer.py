@@ -36,9 +36,8 @@ def drawMaze(maze):
     #im.save("results/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".jpg")
 
 
-def drawPath(frontier, maze):
+def drawSolution(solution,frontier,inner_tree, maze):
     sizeCell=20
-    
     WIDTH = sizeCell * maze.rows + 20
     HIGHT = sizeCell * maze.columns + 20
     displ=9 
@@ -49,6 +48,14 @@ def drawPath(frontier, maze):
         for j in range(maze.rows):
             draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.getMaze()[j][i].value))
     for node in frontier:
+        position=node.idState
+        draw.rectangle([(position[1]*sizeCell+displ,position[0]*sizeCell+displ),(position[1]*sizeCell+sizeCell+displ,position[0]*sizeCell+sizeCell+displ)], FRONTIER)
+    
+    for node in inner_tree:
+        position=node.idState
+        draw.rectangle([(position[1]*sizeCell+displ,position[0]*sizeCell+displ),(position[1]*sizeCell+sizeCell+displ,position[0]*sizeCell+sizeCell+displ)], INNER_TREE)
+
+    for node in solution:
         position=node.idState
         draw.rectangle([(position[1]*sizeCell+displ,position[0]*sizeCell+displ),(position[1]*sizeCell+sizeCell+displ,position[0]*sizeCell+sizeCell+displ)], PATH)
     

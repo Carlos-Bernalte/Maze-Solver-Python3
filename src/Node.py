@@ -16,6 +16,6 @@ class Node:
 
     def toString(self):
         if self.parent is None:
-            return "["+str(self.idNode)+"]["+str(self.cost)+","+str(self.idState)+",None,  None,"+str(self.depth)+","+str(self.heuristic)+","+str(self.value)+"]"
+            return "["+str(self.idNode)+"]["+str(self.cost)+", "+str(self.idState)+", None, None,"+str(self.depth)+", "+str(self.heuristic)+", "+str(self.value)+"]"
         else:
-            return "["+str(self.idNode)+"]["+str(self.cost)+","+str(self.idState)+","+str(self.parent.idState)+","+str(self.action)+","+str(self.depth)+","+str(self.heuristic)+","+str(self.value)+"]"
+            return "["+str(self.idNode)+"]["+str(self.cost)+", "+str(self.idState)+", "+str(self.parent.idNode)+", "+str(self.action)+", "+str(self.depth)+", "+str(self.heuristic)+", "+str(self.value)+"]"
