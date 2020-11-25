@@ -3,9 +3,9 @@
 
 class Cell():
     
-    def __init__(self, x, y):
+    def __init__(self, x, y, value):
         self.position = (x, y)
-        self.value = 0
+        self.value = value
         self.neighbours = [False, False, False, False]
         self.visited = False
         self.onTrace= False
@@ -36,10 +36,15 @@ class Cell():
     def setDefault(self):
         self.neighbours = [False, False, False, False]
         self.onTrace= False
+        self.come_from=""
+
     def setNeighbours(self, neighbours):
         self.neighbours= neighbours
-    def setNeighbour(self, direction):
+
+    def setDirection(self, direction):
         self.come_from=direction
+
+    def setNeighbour(self, direction):
         if direction == "N":
             self.neighbours[0]=True
         if direction == "E":

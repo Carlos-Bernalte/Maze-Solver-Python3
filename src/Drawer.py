@@ -15,12 +15,13 @@ def drawMaze(maze):
     
     WIDTH = sizeCell * maze.rows + 20
     HIGHT = sizeCell * maze.columns + 20
-    displ=9
+    displ=10
     im = Image.new("RGB", (HIGHT,WIDTH), (255, 255, 255))
     draw = ImageDraw.Draw(im)
     for i in range(maze.columns):
         for j in range(maze.rows):
             draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.getMaze()[j][i].value))
+    displ=9
     for i in range(maze.columns):
         for j in range(maze.rows):
             if maze.getMaze()[j][i].getNeighbours()[0]==False:
@@ -32,15 +33,14 @@ def drawMaze(maze):
             if maze.getMaze()[j][i].getNeighbours()[3]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
 
-    im.show()
-    #im.save("results/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".jpg")
+    im.save("mazes/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".png")
 
 
-def drawSolution(solution,frontier,inner_tree, maze):
+def drawSolution(solution,frontier,inner_tree, maze, strategy):
     sizeCell=20
     WIDTH = sizeCell * maze.rows + 20
     HIGHT = sizeCell * maze.columns + 20
-    displ=9 
+    displ=10
     im = Image.new("RGB", (HIGHT,WIDTH), (255, 255, 255))
     draw = ImageDraw.Draw(im)
 
@@ -58,7 +58,7 @@ def drawSolution(solution,frontier,inner_tree, maze):
     for node in solution:
         position=node.idState
         draw.rectangle([(position[1]*sizeCell+displ,position[0]*sizeCell+displ),(position[1]*sizeCell+sizeCell+displ,position[0]*sizeCell+sizeCell+displ)], PATH)
-    
+    displ=9
     for i in range(maze.columns):
         for j in range(maze.rows):
             
@@ -70,8 +70,7 @@ def drawSolution(solution,frontier,inner_tree, maze):
                 draw.line((i*sizeCell+displ, j*sizeCell+sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #South
             if maze.getMaze()[j][i].getNeighbours()[3]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
-    im.show()
-    #im.save("results/Resolved_Lab_" + str(maze.columns) + "_" + str(maze.rows) + ".jpg")
+    im.save("results/Resolved_Lab_" + str(maze.rows) + "_" + str(maze.columns) + "_"+strategy+".png")
 
 def typeOfBox(value):
     if value==0:

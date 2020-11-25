@@ -9,7 +9,10 @@ def searchAlgorithm(problem, maze):
     sol=None
     closed=[]
     fringe=Frontier.Frontier()
-    fringe.insertNode(Node.Node(problem.initial,0,None,None,0,heuristic(problem.initial, problem.objective),heuristic(problem.initial, problem.objective)))
+    f=heuristic(problem.initial, problem.objective)
+    initial_node=Node.Node(problem.initial,0,None,None,0,f,0)
+    initial_node.value=calcValue(initial_node,0,f,problem.strategy)
+    fringe.insertNode(initial_node)
     while(1):
         if depth==1000000:
             print("The algorithm arrrives to the limit of iteractions")
@@ -27,26 +30,37 @@ def searchAlgorithm(problem, maze):
                 fringe.insertList(initNodes(currentNode, neighbors, problem.objective, problem.strategy))
                 closed.append(currentNode)
                 depth+=1
-    drawSolution(sol,fringe.frontier,closed, maze)
+    writeSolution(sol,problem.strategy, maze)
+    drawSolution(sol,fringe.frontier,closed, maze,problem.strategy)
+
+def writeSolution(solution,strategy,maze):
+    solution_txt = open("results/solution_"+str(maze.rows)+"x"+str(maze.columns)+"_"+strategy+".txt","w")
+    solution_txt.write("[id][cost,state,father_id,action,depth,h,value]")     
+    for n in solution:
+        solution_txt.write("\n"+n.toString())
+    solution_txt.close() 
+
+def calcValue(node,cost,f,strategy=""):
+    value=0
+    if strategy == "BREADTH":
+        value=node.depth+1
+    elif strategy == "DEPTH":
+        value=1/(node.depth+1)
+    elif strategy == "GREEDY":
+        value=f
+    elif strategy == "UNIFORM":
+        value=node.cost
+    elif strategy =="A":
+        value=cost+f
+    return value
 
 def initNodes(currentNode=Node, neighbors=[], objective=(), s=""):
     listNode=[]
     for neig in neighbors:
         cost=currentNode.cost+neig[2]+1
         f=heuristic(neig[1], objective)
-        value=cost+f
-        
-        if s == "BREADTH":
-            value=currentNode.depth+1
-        elif s == "DEPTH":
-            value=1/(currentNode.depth+1)
-        elif s == "GREEDY":
-            value=f
-        elif s == "UNIFORM":
-            value=currentNode.cost
-        elif s =="'A":
-            value=cost+f
-
+        value=calcValue(currentNode, cost, f, s)
+    
         node=Node.Node(neig[1],currentNode.cost+neig[2]+1,currentNode,neig[0], currentNode.depth+1,f, value)
         listNode.append(node)
     return listNode

@@ -29,7 +29,7 @@ class Maze:
         for i in range(self.rows):
             self.grid.append([])
             for j in range(self.columns):
-                self.grid[i].append(Cell.Cell(i, j))
+                self.grid[i].append(Cell.Cell(i, j, random.randint(0, 3)))
     
     def getMaze(self):
         return self.grid
@@ -62,29 +62,31 @@ class Maze:
         choosen=False
         while not choosen:
             direction=random.randint(0,3)
-
+            
             if direction==0 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX-1!=-1:
-
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
                 self.CurrentCellX-=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
+                self.grid[self.CurrentCellX][self.CurrentCellY].setDirection("S")
                 choosen = True
             elif direction==1 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "W" and self.CurrentCellY+1!=self.columns:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
                 self.CurrentCellY+=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
+                self.grid[self.CurrentCellX][self.CurrentCellY].setDirection("O")
                 choosen = True
             elif direction==2 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX+1!=self.rows:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
                 self.CurrentCellX+=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
+                self.grid[self.CurrentCellX][self.CurrentCellY].setDirection("N")
                 choosen = True
 
             elif direction==3 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "O" and self.CurrentCellY-1!=-1:
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
-
                 self.CurrentCellY-=1
                 self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
+                self.grid[self.CurrentCellX][self.CurrentCellY].setDirection("E")
                 choosen = True
 
     def deleteLoop(self):
@@ -93,7 +95,8 @@ class Maze:
             while cellPopped.getPosition() != (self.CurrentCellX,self.CurrentCellY):
                 self.grid[cellPopped.getPosition()[0]][cellPopped.getPosition()[1]].setDefault()
                 cellPopped=self.path.pop() 
-
+            self.grid[cellPopped.getPosition()[0]][cellPopped.getPosition()[1]].setDefault()
+            
     def generateLab(self):
         self.path=[]
         self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
