@@ -26,7 +26,7 @@ def searchAlgorithm(problem, maze):
                 sol=solution(currentNode)
                 break
             if not isIn(currentNode, closed):
-                neighbors=succerssorFunction(currentNode, maze.getMaze())
+                neighbors=succerssorFunction(currentNode, maze.grid)
                 fringe.insertList(initNodes(currentNode, neighbors, problem.objective, problem.strategy))
                 closed.append(currentNode)
                 depth+=1
