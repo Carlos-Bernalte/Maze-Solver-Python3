@@ -9,7 +9,7 @@ from SearchSolution import searchAlgorithm
 
 from tkinter.filedialog import askopenfilename
 from tkinter import Tk
-
+Tk.withdraw()
 
 def subTask1():
     rows, columns=-1,-1
@@ -23,7 +23,7 @@ def subTask1():
     my_maze = Maze.Maze()
     my_maze.generateRandomMaze(rows, columns)
     Drawer.drawMaze(my_maze)
-    #JsonManager.write(my_maze)
+    JsonManager.write(my_maze)
     print("Maze generated on \\mazes folder.\n")
     
 def subTask2():
@@ -47,6 +47,7 @@ def subTask3():
 
     prob=Problem(problem["INITIAL"][1:-1].split(","),problem["OBJETIVE"][1:-1].split(","),strategy)
     searchAlgorithm(prob,my_maze)
+    print("Solution storage on \\results folder.")
 
 def defineProblem():
     print("Choose the maze you would want to solve: ")
@@ -70,28 +71,28 @@ def defineProblem():
     file=file_maze.split("/")
 
     JsonManager.writeProblem(initial, objective, file[len(file)-1], [my_maze.rows,my_maze.columns])
+    print("Problem storage on \\problems folder.")
     
 if __name__ == '__main__':
     answer=-1
-    while 1:
-        print("##### Choose what you want to do: #####\n •(0) Exit.\n •(1) Generate a random maze.\n •(2) Create a maze from JSON.\n •(3) Solve a problem.\n •(4) Define a problem." )
-        try:
-            answer=int(input(">ANSWER: "))
-            if answer == 1:
-                subTask1()
-            elif answer== 2:
-                subTask2()
-            elif answer== 3:
-                subTask3()
-            elif answer== 4:
-                defineProblem()
-            elif answer==0:
-                break
-            else:
-                print("Please write an available number")
+    print("##### Choose what you want to do: #####\n •(0) Exit.\n •(1) Generate a random maze.\n •(2) Create a maze from JSON.\n •(3) Solve a problem.\n •(4) Define a problem." )
+    try:
+        answer=int(input(">ANSWER: "))
+        if answer == 1:
+            subTask1()
+        elif answer== 2:
+            subTask2()
+        elif answer== 3:
+            subTask3()
+        elif answer== 4:
+            defineProblem()
+        elif answer==0:
+            print(">>Exit")
+        else:
+            print("Please write an available number")
 
-        except ValueError:
-            print("##ERROR: Please write an available number.")
-        except KeyboardInterrupt:
-            print("Program finished")
+    except ValueError:
+        print("##ERROR: Please write an available number.")
+    except KeyboardInterrupt:
+        print("Program finished")
 

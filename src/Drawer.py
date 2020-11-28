@@ -34,8 +34,8 @@ def drawMaze(maze):
             if neighs[3]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
     
-    #im.save("mazes/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".png")
-    im.show()
+    im.save("mazes/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".png")
+
 
 
 def drawSolution(solution,frontier,inner_tree, maze, strategy):
@@ -48,7 +48,7 @@ def drawSolution(solution,frontier,inner_tree, maze, strategy):
 
     for i in range(maze.columns):
         for j in range(maze.rows):
-            draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.getMaze()[j][i].value))
+            draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.grid[j][i].value))
     for node in frontier:
         position=node.idState
         draw.rectangle([(position[1]*sizeCell+displ,position[0]*sizeCell+displ),(position[1]*sizeCell+sizeCell+displ,position[0]*sizeCell+sizeCell+displ)], FRONTIER)
@@ -84,19 +84,3 @@ def typeOfBox(value):
         return GRASS
     if value==3:
         return WATER
-
-def drawMaze2(maze):
-    sizeCell=20
-    
-    WIDTH = sizeCell * maze.rows + 20
-    HIGHT = sizeCell * maze.columns + 20
-    displ=10
-    im = Image.new("RGB", (HIGHT,WIDTH), (255, 255, 255))
-    draw = ImageDraw.Draw(im)
-    for i in range(maze.columns):
-        for j in range(maze.rows):
-            
-            if maze.grid[j][i].visited==True:
-                draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], PATH)
-
-    im.show()
