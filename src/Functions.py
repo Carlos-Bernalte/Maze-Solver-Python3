@@ -1,7 +1,7 @@
-import Maze, Node, Cell
+
 def succerssorFunction(node, maze):
     successors=[]
-    neighbours=maze[node.idState[0]][node.idState[1]].getNeighbours()
+    neighbours=maze[node.idState[0]][node.idState[1]].neighbours
     if neighbours[0]==True:
         successors.append(("N",(node.idState[0]-1, node.idState[1]), maze[node.idState[0]-1][node.idState[1]].value))
     if neighbours[1]==True:

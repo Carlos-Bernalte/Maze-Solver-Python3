@@ -2,7 +2,7 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-from pathlib import PureWindowsPath
+
 import Maze, JsonManager, Drawer
 from Problem import Problem
 from SearchSolution import searchAlgorithm
@@ -23,7 +23,7 @@ def subTask1():
     my_maze = Maze.Maze()
     my_maze.generateRandomMaze(rows, columns)
     Drawer.drawMaze(my_maze)
-    JsonManager.write(my_maze)
+    #JsonManager.write(my_maze)
     print("Maze generated on \\mazes folder.\n")
     
 def subTask2():
@@ -43,8 +43,8 @@ def subTask3():
     strategy=-1
     while strategy != "BREADTH" and strategy != "DEPTH" and strategy != "GREEDY" and strategy != "UNIFORM" and strategy != "A":
         print("Strategies available: [BREADTH, DEPTH, GREEDY, UNIFORM, A]")
-        strategy=input("• Choose your stratrgy to solve: ")
-        print()
+        strategy=input("• Choose your stratrgy to solve: \n")
+
     prob=Problem(problem["INITIAL"][1:-1].split(","),problem["OBJETIVE"][1:-1].split(","),strategy)
     searchAlgorithm(prob,my_maze)
 
@@ -68,6 +68,7 @@ def defineProblem():
         objective[0]=int(input("  Objective cell row: "))
         objective[1]=int(input("  Obejctive cell column: "))
     file=file_maze.split("/")
+
     JsonManager.writeProblem(initial, objective, file[len(file)-1], [my_maze.rows,my_maze.columns])
     
 if __name__ == '__main__':

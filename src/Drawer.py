@@ -20,20 +20,22 @@ def drawMaze(maze):
     draw = ImageDraw.Draw(im)
     for i in range(maze.columns):
         for j in range(maze.rows):
-            draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.getMaze()[j][i].value))
+            draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], typeOfBox(maze.grid[j][i].value))
     displ=9
     for i in range(maze.columns):
         for j in range(maze.rows):
-            if maze.getMaze()[j][i].getNeighbours()[0]==False:
+            neighs=maze.grid[j][i].neighbours
+            if neighs[0]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+displ), WALLS, 2) #North
-            if maze.getMaze()[j][i].getNeighbours()[1]==False:
+            if neighs[1]==False:
                 draw.line((i*sizeCell+sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #East
-            if maze.getMaze()[j][i].getNeighbours()[2]==False:
+            if neighs[2]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #South
-            if maze.getMaze()[j][i].getNeighbours()[3]==False:
+            if neighs[3]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
-
-    im.save("mazes/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".png")
+    
+    #im.save("mazes/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".png")
+    im.show()
 
 
 def drawSolution(solution,frontier,inner_tree, maze, strategy):
@@ -61,15 +63,16 @@ def drawSolution(solution,frontier,inner_tree, maze, strategy):
     displ=9
     for i in range(maze.columns):
         for j in range(maze.rows):
-            
-            if maze.getMaze()[j][i].getNeighbours()[0]==False:
+            neighs=maze.grid[j][i].neighbours
+            if neighs[0]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+displ), WALLS, 2) #North
-            if maze.getMaze()[j][i].getNeighbours()[1]==False:
+            if neighs[1]==False:
                 draw.line((i*sizeCell+sizeCell+displ, j*sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #East
-            if maze.getMaze()[j][i].getNeighbours()[2]==False:
+            if neighs[2]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+sizeCell+displ, i*sizeCell+sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #South
-            if maze.getMaze()[j][i].getNeighbours()[3]==False:
+            if neighs[3]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
+
     im.save("results/Resolved_Lab_" + str(maze.rows) + "_" + str(maze.columns) + "_"+strategy+".png")
 
 def typeOfBox(value):
@@ -81,3 +84,19 @@ def typeOfBox(value):
         return GRASS
     if value==3:
         return WATER
+
+def drawMaze2(maze):
+    sizeCell=20
+    
+    WIDTH = sizeCell * maze.rows + 20
+    HIGHT = sizeCell * maze.columns + 20
+    displ=10
+    im = Image.new("RGB", (HIGHT,WIDTH), (255, 255, 255))
+    draw = ImageDraw.Draw(im)
+    for i in range(maze.columns):
+        for j in range(maze.rows):
+            
+            if maze.grid[j][i].visited==True:
+                draw.rectangle([(i*sizeCell+displ,j*sizeCell+displ),(i*sizeCell+sizeCell+displ,j*sizeCell+sizeCell+displ)], PATH)
+
+    im.show()
