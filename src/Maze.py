@@ -6,8 +6,7 @@ import Cell, random
 class Maze:
 
     def __init__(self):
-        self.grid = []
-        self.path = []        
+        self.grid = []       
 
     def generateRandomMaze(self, rows, columns):
         self.rows = rows
@@ -22,16 +21,14 @@ class Maze:
         for i in range(self.rows):
             for j in range(self.columns):
                 self.grid[i][j].neighbours=JSON["cells"]["(" + str(i) + ", " + str(j) + ")"]["neighbors"]
+                self.grid[i][j].value=JSON["cells"]["(" + str(i) + ", " + str(j) + ")"]["value"]
 
 
     def initLab(self):
         for i in range(self.rows):
             self.grid.append([])
             for j in range(self.columns):
-                self.grid[i].append(Cell.Cell(i, j))
-    
-    def getMaze(self):
-        return self.grid
+                self.grid[i].append(Cell.Cell(i, j, random.randint(0, 3)))
 
     #--Checks if the maze is completed (all the cells are visited)
     def checkMaze(self):
@@ -42,7 +39,7 @@ class Maze:
                     complete = False
         return complete
     #--Choose the starting cell we must to arrive
-    def chooseStartingCell(self):
+    def chooseVisitedCell(self):
         initialCellX = random.randint(0, self.rows - 1)
         initialCellY = random.randint(0, self.columns - 1)
         self.grid[initialCellX][initialCellY].setVisited()
@@ -50,63 +47,82 @@ class Maze:
     #--Is to choose a cell where we are going to start on the maze to build a path
     def chooseRandomCell(self):
         choosen=False
+        x,y=0,0
         while not choosen:
-            self.CurrentCellX = random.randint(0, self.rows - 1)
-            self.CurrentCellY = random.randint(0, self.columns - 1)
-            if self.grid[self.CurrentCellX][self.CurrentCellY].getVisited() == False:
-                self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
+            x = random.randint(0, self.rows - 1)
+            y = random.randint(0, self.columns - 1)
+            if self.grid[x][y].visited == False:
                 choosen = True
-    #--Choose the direction you come from, checking that you cannot go back to the direction you came from, as well as you cannot go out of bounds
-    def randomizeDir(self):
+
+        return x, y
+    
+    def navigateMaze(self):
+        path=[]
+        x,y=self.chooseRandomCell()
+        path.append([(x,y),"",""])
+        while self.grid[x][y].visited == False:
+            path=self.randomizeDirection(x,y,path)
+            x,y = path[-1][0]
+            if self.isIn((x,y),path[0:-1])==True:
+                path=self.deleteLoop((x,y),path)
+        return path
+
+    def deleteLoop(self,cellRepeated,path):
+        path.pop()
+        cellPoped=path.pop()
+        while cellPoped[0] != cellRepeated:
+            cellPoped=path.pop()
+        cellPoped[2]=""
+        path.append(cellPoped)
+        return path
+
+    def isIn(self,cell, path):
+        for cellInPath in path:
+            if cellInPath[0] == cell:
+                return True
+        return False
+    
+    def randomizeDirection(self, x,y,path):
         choosen=False
+        direction=""
         while not choosen:
-            direction=random.randint(0,3)
-
-            if direction==0 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX-1!=-1:
-
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
-                self.CurrentCellX-=1
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
-                choosen = True
-            elif direction==1 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "W" and self.CurrentCellY+1!=self.columns:
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
-                self.CurrentCellY+=1
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
-                choosen = True
-            elif direction==2 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "N" and self.CurrentCellX+1!=self.rows:
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("S")
-                self.CurrentCellX+=1
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("N")
-                choosen = True
-
-            elif direction==3 and self.grid[self.CurrentCellX][self.CurrentCellY].getDirection() != "O" and self.CurrentCellY-1!=-1:
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("O")
-
-                self.CurrentCellY-=1
-                self.grid[self.CurrentCellX][self.CurrentCellY].setNeighbour("E")
-                choosen = True
-
-    def deleteLoop(self):
-        if self.grid[self.CurrentCellX][self.CurrentCellY].isOnTrace()==True:
-            cellPopped=self.path.pop()
-            while cellPopped.getPosition() != (self.CurrentCellX,self.CurrentCellY):
-                self.grid[cellPopped.getPosition()[0]][cellPopped.getPosition()[1]].setDefault()
-                cellPopped=self.path.pop() 
-
-    def generateLab(self):
-        self.path=[]
-        self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
-        while self.grid[self.CurrentCellX][self.CurrentCellY].getVisited()==False:
-            self.randomizeDir()
-            self.deleteLoop()
-            self.grid[self.CurrentCellX][self.CurrentCellY].setOnTrace()
-            self.path.append(self.grid[self.CurrentCellX][self.CurrentCellY])
+            direction=random.choice(["N","E","S","O"])
+            if direction=="N" and x-1>-1 and path[-1][0]!= (x+1,y):
+                path[-1][2]="N"
+                x-=1
+                path.append([(x,y),"S",""])
+                choosen=True
+            elif direction=="E" and y+1<self.columns-1 and path[-1][0]!= (x,y-1):
+                path[-1][2]="E"
+                y+=1
+                path.append([(x,y),"O",""])
+                choosen=True
+            elif direction=="S" and x+1<self.rows-1 and path[-1][0]!= (x-1,y):
+                path[-1][2]="S"
+                x+=1
+                path.append([(x,y),"N",""])
+                choosen=True
+            elif direction=="O" and y-1>-1 and path[-1][0]!= (x,y+1):
+                path[-1][2]="O"
+                y-=1
+                path.append([(x,y),"E",""])
+                choosen=True
+        return path
 
     def iterate(self):
-        self.chooseStartingCell()
-        while self.checkMaze()==False:
-            self.chooseRandomCell()
-            self.generateLab()
-            for cell in self.path:
-                cell.setVisited()
+        self.chooseVisitedCell()
+        while self.checkMaze() == False:
+            path=self.navigateMaze()
 
+            for i in range(len(path)):
+                x,y = path[i][0]
+                self.grid[x][y].visited=True
+                self.grid[x][y].setNeighbour(path[i][1])
+                self.grid[x][y].setNeighbour(path[i][2])
+
+"""
+        for i in range(self.rows):
+            for j in range(self.columns):
+                print(self.grid[i][j].neighbours, end="")
+            print()
+"""
