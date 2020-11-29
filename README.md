@@ -10,7 +10,7 @@ In order to execute this program you must have installed python3.<br>
 Once you execute the program you must see an option menu like: <br>
 ```sh
 ##### Choose what you want to do: #####
- •(0) End the execution.
+ •(0) Exit.
  •(1) Generate a random maze.
  •(2) Create a maze from JSON.
  •(3) Test insertion on frontier
