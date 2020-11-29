@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+# -- coding: utf-8 --
+
+
 import Problem
 import Frontier
 import Node

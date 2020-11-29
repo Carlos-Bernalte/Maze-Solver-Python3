@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+# -- coding: utf-8 --
+
+
 class Frontier:
     def __init__(self):
         self.frontier=[]

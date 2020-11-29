@@ -8,8 +8,6 @@ from Problem import Problem
 from SearchSolution import searchAlgorithm
 
 from tkinter.filedialog import askopenfilename
-from tkinter import Tk
-Tk.withdraw()
 
 def subTask1():
     rows, columns=-1,-1

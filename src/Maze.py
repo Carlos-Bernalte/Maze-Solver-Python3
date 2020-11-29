@@ -30,7 +30,7 @@ class Maze:
             for j in range(self.columns):
                 self.grid[i].append(Cell.Cell(i, j, random.randint(0, 3)))
 
-    #--Checks if the maze is completed (all the cells are visited)
+
     def checkMaze(self):
         complete=True
         for i in range(self.rows):
@@ -38,13 +38,13 @@ class Maze:
                 if self.grid[i][j].visited== False:
                     complete = False
         return complete
-    #--Choose the starting cell we must to arrive
+
     def chooseVisitedCell(self):
         initialCellX = random.randint(0, self.rows - 1)
         initialCellY = random.randint(0, self.columns - 1)
         self.grid[initialCellX][initialCellY].setVisited()
 
-    #--Is to choose a cell where we are going to start on the maze to build a path
+
     def chooseRandomCell(self):
         choosen=False
         x,y=0,0
@@ -119,10 +119,3 @@ class Maze:
                 self.grid[x][y].visited=True
                 self.grid[x][y].setNeighbour(path[i][1])
                 self.grid[x][y].setNeighbour(path[i][2])
-
-"""
-        for i in range(self.rows):
-            for j in range(self.columns):
-                print(self.grid[i][j].neighbours, end="")
-            print()
-"""

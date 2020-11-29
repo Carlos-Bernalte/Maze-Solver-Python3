@@ -9,20 +9,15 @@ class Cell():
         self.value = value
         self.neighbours = [False, False, False, False]
         self.visited = False
-        self.onTrace= False
-        self.comeFrom = ""
 
     def getPosition(self):
         return (self.x, self.y)
 
     def setVisited(self):
         self.visited=True
-        self.onTrace=False
 
     def setDefault(self):
         self.neighbours = [False, False, False, False]
-        self.onTrace= False
-        self.comeFrom=""
 
     def setNeighbours(self, neighbours):
         self.neighbours= neighbours
