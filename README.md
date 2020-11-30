@@ -1,9 +1,6 @@
 # A1_11
 This repository is destined to be the place of work for **"Intelligent Systems"** class of Computer Engineering in UCLM 2020/2021
 
-# Wilson's Algorithm
-**Wilson’s Algorithm** uses loop-erased random walks to generate a uniform spanning tree — an unbiased sample of all possible spanning trees.<br>
-The algorithm initializes the maze with an arbitrary starting cell. Then, a new cell is added to the maze, initiating a random walk (shown in magenta). The random walk continues until it reconnects with the existing maze (shown in white). However, if the random walk intersects itself, the resulting loop is erased before the random walk continues.
 
 ## Notes about the project
 In order to execute this program you must have installed python3.<br>
