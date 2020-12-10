@@ -13,10 +13,17 @@ def searchAlgorithm(problem, maze):
     sol=None
     closed=[]
     fringe=Frontier.Frontier()
-    f=heuristic(problem.initial, problem.objective)
-    initial_node=Node.Node(problem.initial,0,None,None,0,f,0)
-    initial_node.value=calcValue(initial_node,0,f,problem.strategy)
+
+    initial_node=Node.Node()
+    initial_node.idState=problem.initial
+    initial_node.cost=0
+    initial_node.parent=None
+    initial_node.action=None
+    initial_node.depth=0
+    initial_node.heuristic=heuristic(problem.initial, problem.objective)
+    initial_node.value=calcValue(initial_node, problem.strategy)
     fringe.insertNode(initial_node)
+
     while(1):
         if depth==1000000:
             print("The algorithm arrrives to the limit of iteractions")
@@ -44,31 +51,33 @@ def writeSolution(solution,strategy,maze):
         solution_txt.write("\n"+n.toString())
     solution_txt.close() 
 
-def calcValue(node,cost,f,strategy=""):
-    value=0
+def calcValue(node=Node,strategy=""):
+
     if strategy == "BREADTH":
-        value=node.depth+1
+        return node.depth+1
     elif strategy == "DEPTH":
-        value=1/(node.depth+1)
+        return 1/(node.depth+1)
     elif strategy == "GREEDY":
-        value=f
+        return node.heuristic
     elif strategy == "UNIFORM":
-        value=node.cost
+        return node.cost
     elif strategy =="A":
-        value=cost+f
-    return value
+        return node.cost+node.heuristic
 
 def initNodes(currentNode=Node, neighbors=[], objective=(), s=""):
     listNode=[]
     for neig in neighbors:
-        cost=currentNode.cost+neig[2]+1
-        f=heuristic(neig[1], objective)
-        value=calcValue(currentNode, cost, f, s)
+        node=Node.Node()
+        node.idState=neig[1]
+        node.cost=currentNode.cost+neig[2]+1
+        node.parent=currentNode
+        node.action=neig[0]
+        node.depth=currentNode.depth+1
+        node.heuristic=heuristic(neig[1], objective)
+        node.value=calcValue(node, s)
     
-        node=Node.Node(neig[1],currentNode.cost+neig[2]+1,currentNode,neig[0], currentNode.depth+1,f, value)
         listNode.append(node)
     return listNode
-
 
 def isIn(currentNode, closed):
     for node in closed:
