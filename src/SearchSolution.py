@@ -38,7 +38,7 @@ def searchAlgorithm(problem, maze):
                 break
             if not isIn(currentNode, closed):
                 neighbors=succerssorFunction(currentNode, maze.grid)
-                fringe.insertList(initNodes(currentNode, neighbors, problem.objective, problem.strategy))
+                fringe.insertList(initNodes(currentNode, neighbors, problem.objective, problem.strategy,maze.grid))
                 closed.append(currentNode)
                 depth+=1
     writeSolution(sol,problem.strategy, maze)
@@ -64,7 +64,7 @@ def calcValue(node=Node,strategy=""):
     elif strategy =="A":
         return node.cost+node.heuristic
 
-def initNodes(currentNode=Node, neighbors=[], objective=(), s=""):
+def initNodes(currentNode=Node, neighbors=[], objective=(), s="",maze=[]):
     listNode=[]
     for neig in neighbors:
         node=Node.Node()
@@ -75,7 +75,8 @@ def initNodes(currentNode=Node, neighbors=[], objective=(), s=""):
         node.depth=currentNode.depth+1
         node.heuristic=heuristic(neig[1], objective)
         node.value=calcValue(node, s)
-    
+        
+
         listNode.append(node)
     return listNode
 

@@ -35,7 +35,7 @@ class Frontier:
                     self.frontier.insert(x+1,node)
                     break
                 elif(self.frontier[x].value == node.value):
-                    if(self.frontier[x].idState[0] < node.idState[0]):
+                    if(self.frontier[x].idState[0] < node.idState[0]): 
                         self.frontier.insert(x+1,node)
                         break
                     else:
@@ -50,4 +50,5 @@ class Frontier:
                 if (x==0):
                     self.frontier.insert(0,node)
                 x= x-1
+
 
