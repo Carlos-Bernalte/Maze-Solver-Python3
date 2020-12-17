@@ -54,7 +54,7 @@ def writeSolution(solution,strategy,maze):
 def calcValue(node=Node,strategy=""):
 
     if strategy == "BREADTH":
-        return node.depth+1
+        return node.depth
     elif strategy == "DEPTH":
         return 1/(node.depth+1)
     elif strategy == "GREEDY":
@@ -76,7 +76,6 @@ def initNodes(currentNode=Node, neighbors=[], objective=(), s="",maze=[]):
         node.heuristic=heuristic(neig[1], objective)
         node.value=calcValue(node, s)
         
-
         listNode.append(node)
     return listNode
 
