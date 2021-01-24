@@ -3,7 +3,10 @@ This repository is destined to be the place of work for **"Intelligent Systems"*
 
 
 ## Notes about the project
-In order to execute this program you must have installed python3.<br>
+In order to execute this program you must have installed python3 and execute the program with: <br>
+```sh
+$python .\src\Main.py  
+````
 Once you execute the program you must see an option menu like: <br>
 ```sh
 ##### Choose what you want to do: #####
