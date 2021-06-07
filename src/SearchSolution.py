@@ -66,9 +66,7 @@ def initNodes(currentNode=Node, neighbors=[], objective=(), s="",maze=[]):
     for neig in neighbors:
         node=Node.Node()
         node.idState=neig[1]
-        #node.cost=currentNode.cost+neig[2]+1
-        # node.cost=currentNode.cost+abs(maze[currentNode.idState[0]][currentNode.idState[1]].value-maze[node.idState[0]][node.idState[1]].value)+1
-        node.cost=currentNode.cost+((currentNode.idState[1] % 2)+1)*(maze[node.idState[0]][node.idState[1]].value + 1)
+        node.cost=currentNode.cost+neig[2]+1
         node.parent=currentNode
         node.action=neig[0]
         node.depth=currentNode.depth+1

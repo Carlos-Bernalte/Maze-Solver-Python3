@@ -3,10 +3,14 @@
 # -- coding: utf-8 --
 
 
-import Maze, JsonManager, Drawer
+from os import listdir
+
+import Drawer
+import JsonManager
+import Maze
 from Problem import Problem
 from SearchSolution import searchAlgorithm
-from os import listdir
+
 
 def subTask1():
     rows, columns=-1,-1
@@ -55,11 +59,13 @@ def defineProblem():
     except:
         print("Incorrect format of the JSON file.")
         return 0
+    
     initial=[-1,-1]
     while initial[0]<0 or initial[0]>my_maze.rows-1 or initial[1]<0 or initial[1]>my_maze.columns-1:
         print("Select the initial cell: ")
         initial[0]=int(input("  Initial cell row: "))
         initial[1]=int(input("  Initial cell column: "))
+    
     objective=[-1,-1]
     while objective[0]<0 or objective[0]>my_maze.rows-1 or objective[1]<0 or objective[1]>my_maze.columns-1:
         print("Select the objective cell: ")
