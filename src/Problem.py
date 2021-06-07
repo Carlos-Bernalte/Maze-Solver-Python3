@@ -1,7 +1,3 @@
-import Node
-import Frontier
-from Functions import succerssorFunction
-
 class Problem:
     def __init__(self, initial, objetive,strategy):
         self.initial=(int(initial[0]),int(initial[1]))

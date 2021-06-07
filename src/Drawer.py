@@ -38,7 +38,7 @@ def drawMaze(maze):
             if neighs[3]==False:
                 draw.line((i*sizeCell+displ, j*sizeCell+displ, i*sizeCell+displ, j*sizeCell+sizeCell+displ), WALLS, 2) #West
     
-    im.save("mazes/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".png")
+    im.save("results/Lab_" + str(maze.rows) + "_" + str(maze.columns) + ".png")
 
 
 

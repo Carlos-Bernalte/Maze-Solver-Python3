@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 # -- coding: utf-8 --
 
-
-import Problem
 import Frontier
 import Node
-from Functions import succerssorFunction
 from Drawer import drawSolution
 
 def searchAlgorithm(problem, maze):
@@ -51,7 +48,7 @@ def writeSolution(solution,strategy,maze):
         solution_txt.write("\n"+n.toString())
     solution_txt.close() 
 
-def calcValue(node=Node,strategy=""):
+def calcValue(node: Node,strategy: str):
 
     if strategy == "BREADTH":
         return node.depth
@@ -69,7 +66,9 @@ def initNodes(currentNode=Node, neighbors=[], objective=(), s="",maze=[]):
     for neig in neighbors:
         node=Node.Node()
         node.idState=neig[1]
-        node.cost=currentNode.cost+neig[2]+1
+        #node.cost=currentNode.cost+neig[2]+1
+        # node.cost=currentNode.cost+abs(maze[currentNode.idState[0]][currentNode.idState[1]].value-maze[node.idState[0]][node.idState[1]].value)+1
+        node.cost=currentNode.cost+((currentNode.idState[1] % 2)+1)*(maze[node.idState[0]][node.idState[1]].value + 1)
         node.parent=currentNode
         node.action=neig[0]
         node.depth=currentNode.depth+1
@@ -96,4 +95,15 @@ def solution(nodeSolution):
         node = node.parent
     return sol
         
-
+def succerssorFunction(node, maze):
+    successors=[]
+    neighbours=maze[node.idState[0]][node.idState[1]].neighbours
+    if neighbours[0]==True:
+        successors.append(("N",(node.idState[0]-1, node.idState[1]), maze[node.idState[0]-1][node.idState[1]].value))
+    if neighbours[1]==True:
+        successors.append(("E",(node.idState[0], node.idState[1]+1), maze[node.idState[0]][node.idState[1]+1].value))
+    if neighbours[2]==True:
+        successors.append(("S",(node.idState[0]+1, node.idState[1]), maze[node.idState[0]+1][node.idState[1]].value))
+    if neighbours[3]==True:
+        successors.append(("O",(node.idState[0], node.idState[1]-1), maze[node.idState[0]][node.idState[1]-1].value))
+    return successors

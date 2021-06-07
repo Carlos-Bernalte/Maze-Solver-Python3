@@ -6,8 +6,7 @@
 import Maze, JsonManager, Drawer
 from Problem import Problem
 from SearchSolution import searchAlgorithm
-
-from tkinter.filedialog import askopenfilename
+from os import listdir
 
 def subTask1():
     rows, columns=-1,-1
@@ -25,16 +24,16 @@ def subTask1():
     print("Maze generated on \\mazes folder.\n")
     
 def subTask2():
-
     my_maze=Maze.Maze()
-    my_maze.generateMazeJSON(JsonManager.read(askopenfilename()))
+    my_maze.generateMazeJSON(JsonManager.read(choose_file("./mazes")))
     Drawer.drawMaze(my_maze)
+    print("Solution storage on \\results folder.")
 
 def subTask3():
     my_maze=Maze.Maze()
-    problem=JsonManager.read(askopenfilename())
+    problem=JsonManager.read(choose_file("./problems"))
     try:
-        my_maze.generateMazeJSON(JsonManager.read("mazes/"+str(problem["MAZE"])))
+        my_maze.generateMazeJSON(JsonManager.read("./mazes/"+str(problem["MAZE"])))
     except:
         print("Incorrect format of the JSON file.")
         return 0
@@ -51,7 +50,7 @@ def defineProblem():
     print("Choose the maze you would want to solve: ")
     my_maze=Maze.Maze()
     try:
-        file_maze=askopenfilename()
+        file_maze=choose_file("./mazes")
         my_maze.generateMazeJSON(JsonManager.read(file_maze))
     except:
         print("Incorrect format of the JSON file.")
@@ -70,7 +69,20 @@ def defineProblem():
 
     JsonManager.writeProblem(initial, objective, file[len(file)-1], [my_maze.rows,my_maze.columns])
     print("Problem storage on \\problems folder.")
-    
+
+def choose_file(path: str):
+    files=listdir(path)
+    answer=-1;
+    while answer<0 or answer>len(files)-1:
+        print("\nAvailable files: ")
+        i=0;
+        for file in files:
+            print("\t[",i,"]",file)
+            i=i+1
+        answer=int(input("\nSelect the file you want: "))
+    return path+"/"+files[answer]
+
+
 if __name__ == '__main__':
     answer=-1
     print("##### Choose what you want to do: #####\n •(0) Exit.\n •(1) Generate a random maze.\n •(2) Create a maze from JSON.\n •(3) Solve a problem.\n •(4) Define a problem." )
@@ -93,4 +105,7 @@ if __name__ == '__main__':
         print("##ERROR: Please write an available number.")
     except KeyboardInterrupt:
         print("Program finished")
+    except FileNotFoundError:
+        print("Path not founded")
+
 
